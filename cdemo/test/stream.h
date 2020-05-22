@@ -8,10 +8,17 @@
 
 #include "bass.h"
 
+class StreamObserver {
+
+public:
+    virtual void streamCompleted() = 0;
+
+};
+
 class Stream {
 
 public:
-    Stream();
+    Stream(StreamObserver *observer);
     ~Stream();
 
     bool open(const char* file);
@@ -41,8 +48,11 @@ private:
 
     static void streamFadeInSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque);
 
+    void notifyStreamEof();
+
     void doClose();
 private:
+    StreamObserver* _observer;
     HSTREAM _stream;
     volatile BOOL _eof;
 

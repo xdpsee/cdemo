@@ -3,8 +3,8 @@
 // Copyright (c) 2020 zhenhui. All rights reserved.
 //
 
-#ifndef CDEMO_UTILS_H
-#define CDEMO_UTILS_H
+#ifndef CDEMO_UTILITY_H
+#define CDEMO_UTILITY_H
 
 const char* GetErrorDescription(int code);
 
@@ -14,4 +14,4 @@ void PrintError(const char* prefix, int error);
 
 #define LOG(msg) std::cout << (msg) << std::endl
 
-#endif //CDEMO_UTILS_H
+#endif //CDEMO_UTILITY_H

@@ -3,8 +3,9 @@
 // Copyright (c) 2020 zhenhui. All rights reserved.
 //
 
-#include "mp.h"
-#include "utils.h"
+#include <iostream>
+#include "mplayer.h"
+#include "utility.h"
 
 bool MusicPlayer::open(const char *file, bool start, bool fadeIn) {
 
@@ -12,7 +13,7 @@ bool MusicPlayer::open(const char *file, bool start, bool fadeIn) {
         _stream->close(!_stream->eof());
     }
 
-    _stream = new Stream();
+    _stream = new Stream(this);
     if (_stream->open(file)) {
         if (start) {
             return _stream->play(fadeIn);
@@ -76,4 +77,8 @@ bool MusicPlayer::setPosition(double pos) {
     return _stream && _stream->setPosition(pos);
 }
 
+void MusicPlayer::streamCompleted() {
 
+    LOG("MusicPlayer.streamCompleted");
+
+}

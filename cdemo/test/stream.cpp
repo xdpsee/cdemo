@@ -1,6 +1,6 @@
 #include <iostream>
 #include "stream.h"
-#include "utils.h"
+#include "utility.h"
 
 void Stream::deviceFailSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque) {
 
@@ -17,6 +17,7 @@ void Stream::streamEOFSyncProc(HSYNC handle, DWORD channel, DWORD data, void *op
     std::cout << "streamEOFSyncProc, channel = " << channel << std::endl;
 
     stream->_eof = TRUE;
+    stream->notifyStreamEof();
 }
 
 void Stream::streamFadeoutSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque) {
@@ -35,8 +36,8 @@ void Stream::streamFadeInSyncProc(HSYNC handle, DWORD channel, DWORD data, void 
 
 }
 
-Stream::Stream()
-        : _stream(0), _eof(FALSE) {
+Stream::Stream(StreamObserver *observer)
+        : _observer(observer), _stream(0), _eof(FALSE) {
 }
 
 Stream::~Stream() {
@@ -94,7 +95,7 @@ bool Stream::play(bool fadeIn) {
 
     if (ret && fadeIn) {
         BASS_ChannelSetAttribute(_stream, BASS_ATTRIB_VOL, 0);
-        BASS_ChannelSlideAttribute(_stream, BASS_ATTRIB_VOL, 1.0, 3000);
+        BASS_ChannelSlideAttribute(_stream, BASS_ATTRIB_VOL, 1.0, 2000);
         BASS_ChannelSetSync(_stream, BASS_SYNC_SLIDE | BASS_SYNC_ONETIME, 0, streamFadeInSyncProc, this);
     }
 
@@ -152,6 +153,14 @@ bool Stream::eof() {
 bool Stream::crossfading() {
 
     return _stream && BASS_ChannelIsSliding(_stream, BASS_ATTRIB_VOL);
+
+}
+
+void Stream::notifyStreamEof() {
+
+    if (_observer) {
+        _observer->streamCompleted();
+    }
 
 }
 

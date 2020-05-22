@@ -3,15 +3,15 @@
 // Copyright (c) 2020 zhenhui. All rights reserved.
 //
 
-#ifndef CDEMO_MP_H
-#define CDEMO_MP_H
+#ifndef CDEMO_MPLAYER_H
+#define CDEMO_MPLAYER_H
 
 
 #include <vector>
-#include "pb.h"
+#include "playback.h"
 #include "stream.h"
 
-class MusicPlayer : Playback {
+class MusicPlayer : Playback, StreamObserver {
 
 public:
     /**
@@ -71,10 +71,12 @@ public:
      */
     bool setPosition(double pos) override;
 
+public:
+    void streamCompleted();
 
 private:
     Stream *_stream;
 
 };
 
-#endif //CDEMO_MP_H
+#endif //CDEMO_MPLAYER_H

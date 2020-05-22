@@ -2,8 +2,8 @@
 #include <unistd.h>
 #include "bass.h"
 #include "stream.h"
-#include "utils.h"
-#include "mp.h"
+#include "utility.h"
+#include "mplayer.h"
 
 static void PrintPluginInfo(HPLUGIN plugin) {
 
