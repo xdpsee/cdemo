@@ -1,12 +1,15 @@
 #include <iostream>
 #include "stream.h"
+#include "streamob.h"
 #include "utility.h"
+
+#define FADING_DURATION 2000
 
 void Stream::deviceFailSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque) {
 
     Stream *stream = (Stream *) opaque;
 
-    std::cout << "deviceFailSyncProc, channel = " << channel << std::endl;
+    std::cout << "device failed, channel = " << channel << std::endl;
 
 }
 
@@ -14,7 +17,7 @@ void Stream::streamEOFSyncProc(HSYNC handle, DWORD channel, DWORD data, void *op
 
     Stream *stream = (Stream *) opaque;
 
-    std::cout << "streamEOFSyncProc, channel = " << channel << std::endl;
+    std::cout << "stream eof, channel = " << channel << std::endl;
 
     stream->_eof = TRUE;
     stream->notifyStreamEof();
@@ -23,16 +26,20 @@ void Stream::streamEOFSyncProc(HSYNC handle, DWORD channel, DWORD data, void *op
 void Stream::streamFadeoutSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque) {
 
     Stream *stream = (Stream *) opaque;
-    std::cout << "streamFadeoutSyncProc, channel = " << channel << std::endl;
+    std::cout << "stream fade-out finish, channel = " << channel << std::endl;
 
     stream->doClose();
+}
+
+void Stream::streamAboutEndPosSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque) {
+    std::cout << "stream about to finish, channel = " << channel << std::endl;
+    BASS_ChannelSlideAttribute(channel, BASS_ATTRIB_VOL, -1, FADING_DURATION);
 }
 
 void Stream::streamFadeInSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque) {
 
     Stream *stream = (Stream *) opaque;
-    std::cout << "streamFadeInSyncProc, channel = " << channel << std::endl;
-
+    std::cout << "stream fade-in finish, channel = " << channel << std::endl;
 
 }
 
@@ -48,13 +55,19 @@ bool Stream::open(const char *file) {
 
     _stream = BASS_StreamCreateFile(FALSE, file, 0, 0, BASS_STREAM_PRESCAN);
     if (!_stream) {
-        LOG_ERROR("stream create file");
+        notifyStreamError();
         return false;
     }
 
     if (_stream) {
         BASS_ChannelSetSync(_stream, BASS_SYNC_DEV_FAIL | BASS_SYNC_ONETIME, 0, deviceFailSyncProc, this);
         BASS_ChannelSetSync(_stream, BASS_SYNC_END | BASS_SYNC_ONETIME, 0, streamEOFSyncProc, this);
+
+        QWORD bytes = BASS_ChannelGetLength(_stream, BASS_POS_BYTE);
+        QWORD fadeLen = BASS_ChannelSeconds2Bytes(_stream, FADING_DURATION / 1000.0);
+        QWORD param = bytes - fadeLen;
+
+        BASS_ChannelSetSync(_stream, BASS_SYNC_POS | BASS_SYNC_ONETIME, param, streamAboutEndPosSyncProc, this);
     }
 
     return _stream != 0;
@@ -66,7 +79,7 @@ void Stream::close(bool fadeout) {
         bool canFadeout;
         DWORD ret = BASS_ChannelIsActive(_stream);
         if (BASS_ACTIVE_PLAYING == ret && fadeout) {
-            if (BASS_ChannelSlideAttribute(_stream, BASS_ATTRIB_VOL, -1, 2000)) {
+            if (BASS_ChannelSlideAttribute(_stream, BASS_ATTRIB_VOL, -1, FADING_DURATION)) {
                 HSYNC sync = BASS_ChannelSetSync(_stream, BASS_SYNC_SLIDE | BASS_SYNC_ONETIME, 0, streamFadeoutSyncProc, this);
                 canFadeout = sync != 0;
             } else {
@@ -95,7 +108,7 @@ bool Stream::play(bool fadeIn) {
 
     if (ret && fadeIn) {
         BASS_ChannelSetAttribute(_stream, BASS_ATTRIB_VOL, 0);
-        BASS_ChannelSlideAttribute(_stream, BASS_ATTRIB_VOL, 1.0, 2000);
+        BASS_ChannelSlideAttribute(_stream, BASS_ATTRIB_VOL, 1.0, FADING_DURATION);
         BASS_ChannelSetSync(_stream, BASS_SYNC_SLIDE | BASS_SYNC_ONETIME, 0, streamFadeInSyncProc, this);
     }
 
@@ -156,12 +169,20 @@ bool Stream::crossfading() {
 
 }
 
+void Stream::notifyStreamError() {
+
+    LOG_ERROR("stream open failed");
+
+    if (_observer) {
+        _observer->onStreamError();
+    }
+}
+
 void Stream::notifyStreamEof() {
 
     if (_observer) {
-        _observer->streamCompleted();
+        _observer->onStreamCompleted();
     }
-
 }
 
 void Stream::doClose() {
@@ -175,6 +196,8 @@ void Stream::doClose() {
     if (!success) {
         LOG_ERROR("stream close, stream free");
     }
+
+    std::cout << "stream close, channel = " << _stream << std::endl;
 
     _stream = 0;
 

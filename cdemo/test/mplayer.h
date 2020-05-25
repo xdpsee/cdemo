@@ -10,8 +10,16 @@
 #include <vector>
 #include "playback.h"
 #include "stream.h"
+#include "streamob.h"
+#include "collection.h"
+#include "media.h"
 
-class MusicPlayer : Playback, StreamObserver {
+
+class MusicPlayer : Playback {
+
+public:
+    MusicPlayer(StreamObserver* observer);
+    virtual ~MusicPlayer();
 
 public:
     /**
@@ -19,7 +27,7 @@ public:
      * @param start start
      * @return true or false
      */
-    bool open(const char *file, bool start, bool fadeIn) override;
+    bool open(MediaItem* media, bool start, bool fadeIn) override;
 
     /**
      * play
@@ -71,12 +79,12 @@ public:
      */
     bool setPosition(double pos) override;
 
-public:
-    void streamCompleted();
+    MediaCollection* collection() override;
 
 private:
     Stream *_stream;
-
+    MediaCollection* _collection;
+    StreamObserver* _observer;
 };
 
 #endif //CDEMO_MPLAYER_H

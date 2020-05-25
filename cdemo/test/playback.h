@@ -7,10 +7,12 @@
 #define CDEMO_PLAYBACK_H
 
 
+#include "collection.h"
+
 class Playback {
 
 public:
-    virtual bool open(const char* file, bool start, bool fadeIn) = 0;
+    virtual bool open(MediaItem *media, bool start, bool fadeIn) = 0;
 
     virtual bool play(bool fadeIn) = 0;
 
@@ -27,6 +29,8 @@ public:
     virtual double position() = 0;
 
     virtual bool setPosition(double pos) = 0;
+
+    virtual MediaCollection* collection() = 0;
 
 };
 

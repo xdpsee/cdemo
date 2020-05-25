@@ -8,12 +8,7 @@
 
 #include "bass.h"
 
-class StreamObserver {
-
-public:
-    virtual void streamCompleted() = 0;
-
-};
+class StreamObserver;
 
 class Stream {
 
@@ -47,6 +42,10 @@ private:
     static void streamFadeoutSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque);
 
     static void streamFadeInSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque);
+
+    static void streamAboutEndPosSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque);
+
+    void notifyStreamError();
 
     void notifyStreamEof();
 

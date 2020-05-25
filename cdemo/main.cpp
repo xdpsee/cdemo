@@ -33,25 +33,23 @@ int main(int argc, const char *argv[]) {
     HPLUGIN h2 = BASS_PluginLoad("libtags.dylib", 0);
     PrintPluginInfo(h2);
 
-    MusicPlayer* player = new MusicPlayer();
+    MusicPlayer* player = new MusicPlayer(NULL);
+    MediaCollection* mediaCollection = player->collection();
+    mediaCollection->addMedia(new MediaItem("/Users/zhenhui/audio_test/张芸京-怎么哭.flac"));
+    mediaCollection->addMedia(new MediaItem("/Users/zhenhui/audio_test/杰文.mp3"));
+    mediaCollection->addMedia(new MediaItem("/Users/zhenhui/audio_test/Walking in the Cold.m4a"));
+    mediaCollection->addMedia(new MediaItem("/Users/zhenhui/audio_test/黄致列-苦海Live.ape"));
+    mediaCollection->addMedia(new MediaItem("/Users/zhenhui/audio_test/纯雨声.wma"));
 
-    if (!player->open("/Users/zhenhui/audio_test/张芸京-怎么哭.flac", true, true)) {
-        std::cout << "open file 1 failed!" << std::endl;
+    if (!player->open(mediaCollection->next(), true, true)) {
+        std::cout << "open media item failed!" << std::endl;
         return -1;
     }
 
     std::cout << "media duration = " << player->duration() << std::endl;
 
-    bool test = true;
     while (true) {
-        usleep(100000);
-        //std::cout << "current position: " << player->position() << std::endl;
-        if (player->position() > 100 && test) {
-            test = false;
-            if (!player->open("/Users/zhenhui/audio_test/杰文.mp3", true, true)) {
-                std::cout << "open file 2 failed!" << std::endl;
-            }
-        }
+        usleep(5);
     }
 
     return 0;

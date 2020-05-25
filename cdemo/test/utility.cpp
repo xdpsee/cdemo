@@ -89,6 +89,6 @@ const char *GetErrorDescription(int error) {
 }
 
 void PrintError(const char* prefix, int error) {
-    const char* desc = GetErrorDescription(BASS_ErrorGetCode());
-    std::cerr << prefix << ": " << error << std::endl;
+    const char* desc = GetErrorDescription(error);
+    std::cerr << prefix << ": " << desc << std::endl;
 }

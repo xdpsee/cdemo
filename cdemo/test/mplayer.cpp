@@ -7,14 +7,31 @@
 #include "mplayer.h"
 #include "utility.h"
 
-bool MusicPlayer::open(const char *file, bool start, bool fadeIn) {
+MusicPlayer::MusicPlayer(StreamObserver *observer) : _stream(0), _observer(observer) {
+    _collection = new MediaCollection();
+    if (_observer == NULL) {
+        _observer = new DefaultStreamObserver(this);
+    }
+}
+
+MusicPlayer::~MusicPlayer() {
+
+    // stop playback
+
+    delete _observer;
+    delete _collection;
+    _collection = NULL;
+    _observer = NULL;
+}
+
+bool MusicPlayer::open(MediaItem* media, bool start, bool fadeIn) {
 
     if (_stream) {
         _stream->close(!_stream->eof());
     }
 
-    _stream = new Stream(this);
-    if (_stream->open(file)) {
+    _stream = new Stream(_observer);
+    if (_stream->open(media->path())) {
         if (start) {
             return _stream->play(fadeIn);
         }
@@ -77,8 +94,11 @@ bool MusicPlayer::setPosition(double pos) {
     return _stream && _stream->setPosition(pos);
 }
 
-void MusicPlayer::streamCompleted() {
-
-    LOG("MusicPlayer.streamCompleted");
-
+MediaCollection *MusicPlayer::collection() {
+    return _collection;
 }
+
+
+
+
+
