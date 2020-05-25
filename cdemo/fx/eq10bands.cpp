@@ -45,16 +45,19 @@ bool Equalizer10bands::update(EQSetting *setting) {
 }
 
 void Equalizer10bands::init() {
-    _handles[0] = BASS_ChannelSetFX(_stream, BASS_FX_DX8_PARAMEQ, 0);
-    _handles[1] = BASS_ChannelSetFX(_stream, BASS_FX_DX8_PARAMEQ, 0);
-    _handles[2] = BASS_ChannelSetFX(_stream, BASS_FX_DX8_PARAMEQ, 0);
-    _handles[3] = BASS_ChannelSetFX(_stream, BASS_FX_DX8_PARAMEQ, 0);
-    _handles[4] = BASS_ChannelSetFX(_stream, BASS_FX_DX8_PARAMEQ, 0);
-    _handles[5] = BASS_ChannelSetFX(_stream, BASS_FX_DX8_PARAMEQ, 0);
-    _handles[6] = BASS_ChannelSetFX(_stream, BASS_FX_DX8_PARAMEQ, 0);
-    _handles[7] = BASS_ChannelSetFX(_stream, BASS_FX_DX8_PARAMEQ, 0);
-    _handles[8] = BASS_ChannelSetFX(_stream, BASS_FX_DX8_PARAMEQ, 0);
-    _handles[9] = BASS_ChannelSetFX(_stream, BASS_FX_DX8_PARAMEQ, 0);
+    if (!_enabled) {
+        _handles[0] = BASS_ChannelSetFX(_stream, BASS_FX_DX8_PARAMEQ, 0);
+        _handles[1] = BASS_ChannelSetFX(_stream, BASS_FX_DX8_PARAMEQ, 0);
+        _handles[2] = BASS_ChannelSetFX(_stream, BASS_FX_DX8_PARAMEQ, 0);
+        _handles[3] = BASS_ChannelSetFX(_stream, BASS_FX_DX8_PARAMEQ, 0);
+        _handles[4] = BASS_ChannelSetFX(_stream, BASS_FX_DX8_PARAMEQ, 0);
+        _handles[5] = BASS_ChannelSetFX(_stream, BASS_FX_DX8_PARAMEQ, 0);
+        _handles[6] = BASS_ChannelSetFX(_stream, BASS_FX_DX8_PARAMEQ, 0);
+        _handles[7] = BASS_ChannelSetFX(_stream, BASS_FX_DX8_PARAMEQ, 0);
+        _handles[8] = BASS_ChannelSetFX(_stream, BASS_FX_DX8_PARAMEQ, 0);
+        _handles[9] = BASS_ChannelSetFX(_stream, BASS_FX_DX8_PARAMEQ, 0);
+        _enabled = true;
+    }
 }
 
 void Equalizer10bands::clear() {
@@ -66,5 +69,6 @@ void Equalizer10bands::clear() {
             _handles[i] = 0;
         }
     }
+    _enabled = false;
     BASS_ChannelLock(_stream, FALSE);
 }

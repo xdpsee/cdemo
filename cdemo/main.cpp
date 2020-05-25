@@ -39,6 +39,9 @@ int main(int argc, const char *argv[]) {
 
     MusicPlayer *player = new MusicPlayer(NULL);
     MediaCollection *mediaCollection = player->collection();
+    mediaCollection->addMedia(new MediaItem("/Users/zhenhui/audio_test/za.flac"));
+    mediaCollection->addMedia(new MediaItem("/Users/zhenhui/audio_test/pfzl.ape"));
+    mediaCollection->addMedia(new MediaItem("/Users/zhenhui/audio_test/bbb.mp4"));
     mediaCollection->addMedia(new MediaItem("/Users/zhenhui/audio_test/张芸京-怎么哭.flac"));
     mediaCollection->addMedia(new MediaItem("/Users/zhenhui/audio_test/杰文.mp3"));
     mediaCollection->addMedia(new MediaItem("/Users/zhenhui/audio_test/Walking in the Cold.m4a"));

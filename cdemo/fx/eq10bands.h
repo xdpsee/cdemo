@@ -22,6 +22,7 @@ public:
 private:
     HSTREAM _stream;
     HFX _handles[NUM_BANDS] = {0};
+    bool _enabled;
 
     void init();
 
