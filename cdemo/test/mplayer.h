@@ -81,6 +81,8 @@ public:
 
     MediaCollection* collection() override;
 
+    bool equalize(EQSetting *setting) override;
+
 private:
     Stream *_stream;
     MediaCollection* _collection;

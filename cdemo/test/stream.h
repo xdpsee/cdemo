@@ -7,6 +7,7 @@
 #define CDEMO_STREAM_H
 
 #include "bass.h"
+#include "eq10bands.h"
 
 class StreamObserver;
 
@@ -34,6 +35,8 @@ public:
 
     bool crossfading();
 
+    bool update(EQSetting* setting);
+
 private:
     static void deviceFailSyncProc(HSYNC handle, DWORD channel, DWORD data, void* opaque);
 
@@ -45,15 +48,22 @@ private:
 
     static void streamAboutEndPosSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque);
 
+    void setupSync();
+
+    void loadFX();
+
     void notifyStreamError();
 
     void notifyStreamEof();
 
+    void doFadeIn();
+
     void doClose();
 private:
-    StreamObserver* _observer;
     HSTREAM _stream;
     volatile BOOL _eof;
+    Equalizer10bands* _equalizer;
+    StreamObserver* _observer;
 
 };
 

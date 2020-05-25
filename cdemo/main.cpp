@@ -1,9 +1,9 @@
 #include <iostream>
-#include <unistd.h>
 #include "bass.h"
 #include "stream.h"
 #include "utility.h"
 #include "mplayer.h"
+#include "audiofx.h"
 
 static void PrintPluginInfo(HPLUGIN plugin) {
 
@@ -21,6 +21,8 @@ static void PrintPluginInfo(HPLUGIN plugin) {
 
 int main(int argc, const char *argv[]) {
 
+    srand((unsigned int)time(NULL));
+
     std::cout << "system version: " << BASS_GetVersion() << std::endl;
 
     if (!BASS_Init(-1, 44100, 0, NULL, NULL)) {
@@ -32,6 +34,8 @@ int main(int argc, const char *argv[]) {
     PrintPluginInfo(h1);
     HPLUGIN h2 = BASS_PluginLoad("libtags.dylib", 0);
     PrintPluginInfo(h2);
+
+    AudioFXConfig audioFxConfig;
 
     MusicPlayer *player = new MusicPlayer(NULL);
     MediaCollection *mediaCollection = player->collection();
@@ -60,6 +64,26 @@ int main(int argc, const char *argv[]) {
             case 'q': {
                 player->stop();
                 goto _exit;
+            }
+                break;
+            case 'e': {
+                audioFxConfig.eq()->setEnabled(true);
+                audioFxConfig.eq()->setGain(0, ((float)rand()/(float)(RAND_MAX)) * 12);
+                audioFxConfig.eq()->setGain(1, ((float)rand()/(float)(RAND_MAX)) * 12);
+                audioFxConfig.eq()->setGain(2, ((float)rand()/(float)(RAND_MAX)) * 12);
+                audioFxConfig.eq()->setGain(3, ((float)rand()/(float)(RAND_MAX)) * 12);
+                audioFxConfig.eq()->setGain(4, ((float)rand()/(float)(RAND_MAX)) * 12);
+                audioFxConfig.eq()->setGain(5, ((float)rand()/(float)(RAND_MAX)) * 12);
+                audioFxConfig.eq()->setGain(6, ((float)rand()/(float)(RAND_MAX)) * 12);
+                audioFxConfig.eq()->setGain(7, ((float)rand()/(float)(RAND_MAX)) * 12);
+                audioFxConfig.eq()->setGain(8, ((float)rand()/(float)(RAND_MAX)) * 12);
+                audioFxConfig.eq()->setGain(9, ((float)rand()/(float)(RAND_MAX)) * 12);
+                player->equalize(audioFxConfig.eq());
+            }
+                break;
+            case 'r':{
+                audioFxConfig.eq()->setEnabled(false);
+                player->equalize(audioFxConfig.eq());
             }
                 break;
             default:

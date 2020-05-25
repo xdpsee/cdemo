@@ -61,14 +61,8 @@ bool Stream::open(const char *file) {
 
     if (_stream) {
         std::cout << "stream open, channel = " << _stream << std::endl;
-        BASS_ChannelSetSync(_stream, BASS_SYNC_DEV_FAIL | BASS_SYNC_ONETIME, 0, deviceFailSyncProc, this);
-        BASS_ChannelSetSync(_stream, BASS_SYNC_END | BASS_SYNC_ONETIME, 0, streamEOFSyncProc, this);
-
-        QWORD bytes = BASS_ChannelGetLength(_stream, BASS_POS_BYTE);
-        QWORD fadeLen = BASS_ChannelSeconds2Bytes(_stream, FADING_DURATION / 1000.0);
-        QWORD param = bytes - fadeLen;
-
-        BASS_ChannelSetSync(_stream, BASS_SYNC_POS | BASS_SYNC_ONETIME, param, streamAboutEndPosSyncProc, this);
+        setupSync();
+        loadFX();
     }
 
     return _stream != 0;
@@ -108,9 +102,7 @@ bool Stream::play(bool fadeIn) {
     }
 
     if (ret && fadeIn) {
-        BASS_ChannelSetAttribute(_stream, BASS_ATTRIB_VOL, 0);
-        BASS_ChannelSlideAttribute(_stream, BASS_ATTRIB_VOL, 1.0, FADING_DURATION);
-        BASS_ChannelSetSync(_stream, BASS_SYNC_SLIDE | BASS_SYNC_ONETIME, 0, streamFadeInSyncProc, this);
+        doFadeIn();
     }
 
     return TRUE == ret;
@@ -170,6 +162,26 @@ bool Stream::crossfading() {
 
 }
 
+void Stream::setupSync() {
+
+    BASS_ChannelSetSync(_stream, BASS_SYNC_DEV_FAIL | BASS_SYNC_ONETIME, 0, deviceFailSyncProc, this);
+    BASS_ChannelSetSync(_stream, BASS_SYNC_END | BASS_SYNC_ONETIME, 0, streamEOFSyncProc, this);
+
+    QWORD bytes = BASS_ChannelGetLength(_stream, BASS_POS_BYTE);
+    QWORD fadeLen = BASS_ChannelSeconds2Bytes(_stream, FADING_DURATION / 1000.0);
+    QWORD param = bytes - fadeLen;
+    BASS_ChannelSetSync(_stream, BASS_SYNC_POS | BASS_SYNC_ONETIME, param, streamAboutEndPosSyncProc, this);
+}
+
+void Stream::loadFX() {
+    _equalizer = new Equalizer10bands(_stream);
+    // TODO: other fx
+}
+
+bool Stream::update(EQSetting *setting) {
+    return _equalizer->update(setting);
+}
+
 void Stream::notifyStreamError() {
 
     LOG_ERROR("stream open failed");
@@ -186,6 +198,12 @@ void Stream::notifyStreamEof() {
     }
 }
 
+void Stream::doFadeIn() {
+    BASS_ChannelSetAttribute(_stream, BASS_ATTRIB_VOL, 0);
+    BASS_ChannelSlideAttribute(_stream, BASS_ATTRIB_VOL, 1.0, FADING_DURATION);
+    BASS_ChannelSetSync(_stream, BASS_SYNC_SLIDE | BASS_SYNC_ONETIME, 0, streamFadeInSyncProc, this);
+}
+
 void Stream::doClose() {
 
     BOOL stopped = BASS_ChannelStop(_stream);
@@ -200,7 +218,11 @@ void Stream::doClose() {
 
     std::cout << "stream close, channel = " << _stream << std::endl;
 
+    delete _equalizer;
+
     _stream = 0;
+    _equalizer = NULL;
+    _observer = NULL;
 
     delete this;
 }

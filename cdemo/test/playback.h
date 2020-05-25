@@ -6,7 +6,7 @@
 #ifndef CDEMO_PLAYBACK_H
 #define CDEMO_PLAYBACK_H
 
-
+#include "setting.h"
 #include "collection.h"
 
 class Playback {
@@ -31,6 +31,8 @@ public:
     virtual bool setPosition(double pos) = 0;
 
     virtual MediaCollection* collection() = 0;
+
+    virtual bool equalize(EQSetting* setting) = 0;
 
 };
 

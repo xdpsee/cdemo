@@ -24,7 +24,7 @@ MusicPlayer::~MusicPlayer() {
     _observer = NULL;
 }
 
-bool MusicPlayer::open(MediaItem* media, bool start, bool fadeIn) {
+bool MusicPlayer::open(MediaItem *media, bool start, bool fadeIn) {
 
     if (_stream) {
         _stream->close(!_stream->eof());
@@ -99,6 +99,11 @@ bool MusicPlayer::setPosition(double pos) {
 MediaCollection *MusicPlayer::collection() {
     return _collection;
 }
+
+bool MusicPlayer::equalize(EQSetting *setting) {
+    return _stream->update(setting);
+}
+
 
 
 

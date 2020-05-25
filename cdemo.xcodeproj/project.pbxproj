@@ -7,19 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		357FE6DA247BAA0300CE6F7D /* libbass_fx.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 357FE6D9247BAA0300CE6F7D /* libbass_fx.dylib */; };
+		357FE6DC247BAA1500CE6F7D /* libbass_fx.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 357FE6DB247BAA1500CE6F7D /* libbass_fx.dylib */; };
 		35BF71092474F6ED0074763C /* libbass.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ECF318D009DEA2B643210188 /* libbass.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
 		35BF710A2474F6ED0074763C /* libbass.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = ECF318D009DEA2B643210188 /* libbass.dylib */; };
 		35BF710D2474FE4B0074763C /* libbass_ape.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 35BF710C2474FE4B0074763C /* libbass_ape.dylib */; };
 		35BF710E2474FE5F0074763C /* libbass_ape.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 35BF710C2474FE4B0074763C /* libbass_ape.dylib */; };
-		35BF7110247503FD0074763C /* libtags.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 35BF710F247503FD0074763C /* libtags.dylib */; };
-		35BF7111247503FD0074763C /* libtags.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 35BF710F247503FD0074763C /* libtags.dylib */; };
 		ECF311CBC2ED6E5AC59CC43F /* collection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF3125F31036F97CC1E8907 /* collection.cpp */; };
 		ECF312ABA48888EE11784340 /* streamob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF31B789643A6C081DEF9BA /* streamob.cpp */; };
 		ECF3132DA01896E44BEC9D59 /* stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF314045589019382BF4E97 /* stream.cpp */; };
-		ECF314828E2088DE317B3855 /* fx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF31D021A51F301F27C213A /* fx.cpp */; };
 		ECF31648C802F0841DEEA5DA /* mplayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF316F8E68C4B227E22C765 /* mplayer.cpp */; };
+		ECF31656695731B6ACAC8350 /* eq10bands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF318AF35F3238128918291 /* eq10bands.cpp */; };
+		ECF319D1538DAAC3BBBC45C3 /* setting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF315A1393C87B50D9D4A29 /* setting.cpp */; };
 		ECF31A305732DF3EEB53FC69 /* utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF31D397C07A99CE4CB2C90 /* utility.cpp */; };
 		ECF31B8456E3B3A5E6CFAB0F /* media.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF3163A54DE3C136C83D58B /* media.cpp */; };
+		ECF31DAF203465EFC294AE3B /* audiofx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF314368942DAA54784C275 /* audiofx.cpp */; };
 		ECF31E76ACA8CFC7BAE49FF9 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF315671B143D01A9095635 /* main.cpp */; };
 /* End PBXBuildFile section */
 
@@ -30,8 +32,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				357FE6DC247BAA1500CE6F7D /* libbass_fx.dylib in Embed Libraries */,
 				35BF710E2474FE5F0074763C /* libbass_ape.dylib in Embed Libraries */,
-				35BF7111247503FD0074763C /* libtags.dylib in Embed Libraries */,
 				35BF710A2474F6ED0074763C /* libbass.dylib in Embed Libraries */,
 			);
 			name = "Embed Libraries";
@@ -49,8 +51,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		357FE6D9247BAA0300CE6F7D /* libbass_fx.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbass_fx.dylib; path = cdemo/bass/libbass_fx.dylib; sourceTree = "<group>"; };
+		357FE6DB247BAA1500CE6F7D /* libbass_fx.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbass_fx.dylib; path = cdemo/bass/libbass_fx.dylib; sourceTree = "<group>"; };
 		35BF710C2474FE4B0074763C /* libbass_ape.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbass_ape.dylib; path = cdemo/bass/libbass_ape.dylib; sourceTree = "<group>"; };
-		35BF710F247503FD0074763C /* libtags.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtags.dylib; path = cdemo/bass/libtags.dylib; sourceTree = "<group>"; };
+		ECF3110795FDF99DABB1CA4D /* eq10bands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = eq10bands.h; sourceTree = "<group>"; };
 		ECF3111627360865745D4CCD /* collection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = collection.h; sourceTree = "<group>"; };
 		ECF3114DF58F19D34A2B00A6 /* media.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = media.h; sourceTree = "<group>"; };
 		ECF31175460AC83F53CA6F2E /* bass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bass.h; sourceTree = "<group>"; };
@@ -58,19 +62,23 @@
 		ECF3125F31036F97CC1E8907 /* collection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = collection.cpp; sourceTree = "<group>"; };
 		ECF314045589019382BF4E97 /* stream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stream.cpp; sourceTree = "<group>"; };
 		ECF31413D0A1679D587C21E7 /* stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stream.h; sourceTree = "<group>"; };
+		ECF314368942DAA54784C275 /* audiofx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audiofx.cpp; sourceTree = "<group>"; };
 		ECF31458B8086E409F7CD5A4 /* utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utility.h; sourceTree = "<group>"; };
 		ECF31513B9B5EB1714926B14 /* streamob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = streamob.h; sourceTree = "<group>"; };
 		ECF315671B143D01A9095635 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		ECF315A1393C87B50D9D4A29 /* setting.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = setting.cpp; sourceTree = "<group>"; };
 		ECF3163A54DE3C136C83D58B /* media.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = media.cpp; sourceTree = "<group>"; };
 		ECF316F8E68C4B227E22C765 /* mplayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mplayer.cpp; sourceTree = "<group>"; };
+		ECF318AF35F3238128918291 /* eq10bands.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = eq10bands.cpp; sourceTree = "<group>"; };
 		ECF318D009DEA2B643210188 /* libbass.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbass.dylib; path = /Users/zhenhui/cdemo/cdemo/bass/libbass.dylib; sourceTree = "<absolute>"; };
 		ECF3193EE74A88E2C611BCC3 /* playback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = playback.h; sourceTree = "<group>"; };
 		ECF319D1A14F1F7632162181 /* mplayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mplayer.h; sourceTree = "<group>"; };
+		ECF319EAB68CC489A80ECDF1 /* setting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = setting.h; sourceTree = "<group>"; };
 		ECF31B789643A6C081DEF9BA /* streamob.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = streamob.cpp; sourceTree = "<group>"; };
-		ECF31C3C67D3D99DE4A08B81 /* fx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fx.h; sourceTree = "<group>"; };
-		ECF31D021A51F301F27C213A /* fx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fx.cpp; sourceTree = "<group>"; };
+		ECF31C9889E2BBB66AB46B6E /* audiofx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audiofx.h; sourceTree = "<group>"; };
 		ECF31D397C07A99CE4CB2C90 /* utility.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = utility.cpp; sourceTree = "<group>"; };
 		ECF31E96F021CA843C795101 /* cdemo */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = cdemo; sourceTree = BUILT_PRODUCTS_DIR; };
+		ECF31FA12506D11C57B2378E /* bassfx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bassfx.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,8 +86,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				357FE6DA247BAA0300CE6F7D /* libbass_fx.dylib in Frameworks */,
 				35BF710D2474FE4B0074763C /* libbass_ape.dylib in Frameworks */,
-				35BF7110247503FD0074763C /* libtags.dylib in Frameworks */,
 				35BF71092474F6ED0074763C /* libbass.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -129,7 +137,7 @@
 		ECF3163B19F8199187AC958D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				35BF710F247503FD0074763C /* libtags.dylib */,
+				357FE6D9247BAA0300CE6F7D /* libbass_fx.dylib */,
 				35BF710C2474FE4B0074763C /* libbass_ape.dylib */,
 				ECF318D009DEA2B643210188 /* libbass.dylib */,
 			);
@@ -147,6 +155,7 @@
 		ECF31A092A75BE7590B58ED0 = {
 			isa = PBXGroup;
 			children = (
+				357FE6DB247BAA1500CE6F7D /* libbass_fx.dylib */,
 				ECF312E88443B1C203BB424D /* Products */,
 				ECF3113E3F8232596E33BC2A /* cdemo */,
 				ECF3163B19F8199187AC958D /* Frameworks */,
@@ -157,8 +166,13 @@
 		ECF31B58AB1A5EB492C3B1C4 /* fx */ = {
 			isa = PBXGroup;
 			children = (
-				ECF31D021A51F301F27C213A /* fx.cpp */,
-				ECF31C3C67D3D99DE4A08B81 /* fx.h */,
+				ECF318AF35F3238128918291 /* eq10bands.cpp */,
+				ECF3110795FDF99DABB1CA4D /* eq10bands.h */,
+				ECF31FA12506D11C57B2378E /* bassfx.h */,
+				ECF315A1393C87B50D9D4A29 /* setting.cpp */,
+				ECF319EAB68CC489A80ECDF1 /* setting.h */,
+				ECF31C9889E2BBB66AB46B6E /* audiofx.h */,
+				ECF314368942DAA54784C275 /* audiofx.cpp */,
 			);
 			path = fx;
 			sourceTree = "<group>";
@@ -216,13 +230,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				ECF31E76ACA8CFC7BAE49FF9 /* main.cpp in Sources */,
-				ECF314828E2088DE317B3855 /* fx.cpp in Sources */,
 				ECF3132DA01896E44BEC9D59 /* stream.cpp in Sources */,
 				ECF31A305732DF3EEB53FC69 /* utility.cpp in Sources */,
 				ECF31648C802F0841DEEA5DA /* mplayer.cpp in Sources */,
 				ECF312ABA48888EE11784340 /* streamob.cpp in Sources */,
 				ECF31B8456E3B3A5E6CFAB0F /* media.cpp in Sources */,
 				ECF311CBC2ED6E5AC59CC43F /* collection.cpp in Sources */,
+				ECF31656695731B6ACAC8350 /* eq10bands.cpp in Sources */,
+				ECF319D1538DAAC3BBBC45C3 /* setting.cpp in Sources */,
+				ECF31DAF203465EFC294AE3B /* audiofx.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
