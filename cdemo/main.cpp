@@ -33,8 +33,8 @@ int main(int argc, const char *argv[]) {
     HPLUGIN h2 = BASS_PluginLoad("libtags.dylib", 0);
     PrintPluginInfo(h2);
 
-    MusicPlayer* player = new MusicPlayer(NULL);
-    MediaCollection* mediaCollection = player->collection();
+    MusicPlayer *player = new MusicPlayer(NULL);
+    MediaCollection *mediaCollection = player->collection();
     mediaCollection->addMedia(new MediaItem("/Users/zhenhui/audio_test/张芸京-怎么哭.flac"));
     mediaCollection->addMedia(new MediaItem("/Users/zhenhui/audio_test/杰文.mp3"));
     mediaCollection->addMedia(new MediaItem("/Users/zhenhui/audio_test/Walking in the Cold.m4a"));
@@ -48,9 +48,29 @@ int main(int argc, const char *argv[]) {
 
     std::cout << "media duration = " << player->duration() << std::endl;
 
-    while (true) {
-        usleep(5);
+    char op;
+    while (std::cin >> op) {
+        switch (op) {
+            case 'n': {
+                MediaItem* mediaItem = mediaCollection->next();
+                if (mediaItem) {
+                    player->open(mediaItem, true, true);
+                }
+            }
+                break;
+            case 'q': {
+                player->stop();
+                goto _exit;
+            }
+                break;
+            default:
+                std::cout << "press 'n' to next, 'q' to exit" << std::endl;
+                break;
+        }
     }
+
+    _exit:
+    delete player;
 
     return 0;
 }

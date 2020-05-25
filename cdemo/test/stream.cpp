@@ -60,6 +60,7 @@ bool Stream::open(const char *file) {
     }
 
     if (_stream) {
+        std::cout << "stream open, channel = " << _stream << std::endl;
         BASS_ChannelSetSync(_stream, BASS_SYNC_DEV_FAIL | BASS_SYNC_ONETIME, 0, deviceFailSyncProc, this);
         BASS_ChannelSetSync(_stream, BASS_SYNC_END | BASS_SYNC_ONETIME, 0, streamEOFSyncProc, this);
 

@@ -51,7 +51,9 @@ bool MusicPlayer::pause() {
 }
 
 void MusicPlayer::stop() {
-
+    if (_stream) {
+        _stream->close(false);
+    }
 }
 
 float MusicPlayer::volume() {
