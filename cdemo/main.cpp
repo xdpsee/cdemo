@@ -39,7 +39,6 @@ int main(int argc, const char *argv[]) {
     mediaCollection->addMedia(new MediaItem("/Users/zhenhui/audio_test/杰文.mp3"));
     mediaCollection->addMedia(new MediaItem("/Users/zhenhui/audio_test/Walking in the Cold.m4a"));
     mediaCollection->addMedia(new MediaItem("/Users/zhenhui/audio_test/黄致列-苦海Live.ape"));
-    mediaCollection->addMedia(new MediaItem("/Users/zhenhui/audio_test/纯雨声.wma"));
 
     if (!player->open(mediaCollection->next(), true, true)) {
         std::cout << "open media item failed!" << std::endl;
@@ -71,6 +70,8 @@ int main(int argc, const char *argv[]) {
 
     _exit:
     delete player;
+
+    BASS_Free();
 
     return 0;
 }
