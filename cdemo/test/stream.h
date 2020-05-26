@@ -7,8 +7,9 @@
 #define CDEMO_STREAM_H
 
 #include "bass.h"
-#include "eq10bands.h"
+#include "eq10bandsfx.h"
 #include "equalizer.h"
+#include "reverbfx.h"
 
 class StreamObserver;
 
@@ -39,6 +40,8 @@ public:
 
     Equalizer *equalizer();
 
+    Reverb* reverb();
+
 private:
     static void deviceFailSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque);
 
@@ -66,7 +69,8 @@ private:
     HSTREAM _stream;
     volatile BOOL _eof;
 
-    Equalizer10bands *_equalizer;
+    Equalizer10bandsFX *_equalizer;
+    ReverbFX* _reverb;
 
     StreamObserver *_observer;
 

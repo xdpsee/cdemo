@@ -174,7 +174,8 @@ void Stream::setupSync() {
 }
 
 void Stream::loadFX() {
-    _equalizer = new Equalizer10bands(_stream);
+    _equalizer = new Equalizer10bandsFX(_stream);
+    _reverb = new ReverbFX(_stream);
     // TODO: other fx
 }
 
@@ -182,6 +183,15 @@ Equalizer *Stream::equalizer() {
 
     if (!_eof && _stream && _equalizer) {
         return _equalizer;
+    }
+
+    return NULL;
+}
+
+Reverb *Stream::reverb() {
+
+    if (!_eof && _stream && _reverb) {
+        return _reverb;
     }
 
     return NULL;
@@ -216,6 +226,11 @@ void Stream::doClose() {
         LOG_ERROR("stream close, channel stop");
     }
 
+    delete _equalizer;
+    delete _reverb;
+    _equalizer = NULL;
+    _reverb = NULL;
+
     BOOL success = BASS_StreamFree(_stream);
     if (!success) {
         LOG_ERROR("stream close, stream free");
@@ -223,10 +238,7 @@ void Stream::doClose() {
 
     std::cout << "stream close, channel = " << _stream << std::endl;
 
-    delete _equalizer;
-
     _stream = 0;
-    _equalizer = NULL;
     _observer = NULL;
 
     delete this;

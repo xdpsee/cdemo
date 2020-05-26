@@ -88,6 +88,22 @@ int main(int argc, const char *argv[]) {
                 }
             }
                 break;
+            case 't': {
+                Reverb *reverb = player->reverb();
+                if (reverb) {
+                    reverb->enable(true);
+                    reverb->updateReverbTime(2400);
+                    reverb->updateInGain(5.0f);
+                }
+            }
+                break;
+            case 'y': {
+                Reverb *reverb = player->reverb();
+                if (reverb) {
+                    reverb->enable(false);
+                }
+            }
+                break;
             default:
                 std::cout << "press 'n' to next, 'q' to exit" << std::endl;
                 break;
@@ -98,6 +114,7 @@ int main(int argc, const char *argv[]) {
     delete player;
 
     BASS_Free();
+    BASS_PluginFree(0);
 
     return 0;
 }

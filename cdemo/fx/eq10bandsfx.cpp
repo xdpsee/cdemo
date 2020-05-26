@@ -4,17 +4,17 @@
 //
 
 #include <iostream>
-#include "eq10bands.h"
+#include "eq10bandsfx.h"
 
-Equalizer10bands::Equalizer10bands(HSTREAM stream) : _stream(stream) {
+Equalizer10bandsFX::Equalizer10bandsFX(HSTREAM stream) : _stream(stream) {
 
 }
 
-Equalizer10bands::~Equalizer10bands() {
+Equalizer10bandsFX::~Equalizer10bandsFX() {
     tearDown();
 }
 
-void Equalizer10bands::setup() {
+void Equalizer10bandsFX::setup() {
     if (!_enabled) {
         BASS_ChannelLock(_stream, TRUE);
         _handles[0] = BASS_ChannelSetFX(_stream, BASS_FX_DX8_PARAMEQ, 0);
@@ -32,7 +32,7 @@ void Equalizer10bands::setup() {
     }
 }
 
-void Equalizer10bands::tearDown() {
+void Equalizer10bandsFX::tearDown() {
     BASS_ChannelLock(_stream, TRUE);
     for (int i = 0; i < NUM_BANDS; ++i) {
         HFX h = _handles[i];
@@ -45,7 +45,7 @@ void Equalizer10bands::tearDown() {
     BASS_ChannelLock(_stream, FALSE);
 }
 
-void Equalizer10bands::enable(bool enable) {
+void Equalizer10bandsFX::enable(bool enable) {
 
     if (_enabled == enable) {
         return;
@@ -59,7 +59,7 @@ void Equalizer10bands::enable(bool enable) {
     }
 }
 
-bool Equalizer10bands::update(int band, float gain) {
+bool Equalizer10bandsFX::update(int band, float gain) {
 
     if (band < 0 || band >= NUM_BANDS || !_enabled) {
         return false;
@@ -77,7 +77,7 @@ bool Equalizer10bands::update(int band, float gain) {
     return false;
 }
 
-bool Equalizer10bands::update(Gain gains[], size_t num) {
+bool Equalizer10bandsFX::update(Gain gains[], size_t num) {
 
     for (int i = 0; i < num; ++i) {
         if (!update(gains[i].band, gains[i].value)) {
@@ -88,7 +88,7 @@ bool Equalizer10bands::update(Gain gains[], size_t num) {
     return true;
 }
 
-void Equalizer10bands::updateAll() {
+void Equalizer10bandsFX::updateAll() {
 
     BASS_DX8_PARAMEQ param;
     param.fBandwidth = 16;

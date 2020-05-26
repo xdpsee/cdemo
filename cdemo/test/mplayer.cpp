@@ -100,9 +100,17 @@ MediaCollection *MusicPlayer::queue() {
     return _collection;
 }
 
-Equalizer* MusicPlayer::equalizer() {
+Equalizer *MusicPlayer::equalizer() {
     if (_stream) {
         return _stream->equalizer();
+    }
+
+    return NULL;
+}
+
+Reverb *MusicPlayer::reverb() {
+    if (_stream) {
+        return _stream->reverb();
     }
 
     return NULL;

@@ -84,6 +84,8 @@ public:
 
     Equalizer *equalizer() override;
 
+    Reverb *reverb() override;
+
 private:
     Stream *_stream;
     MediaCollection *_collection;

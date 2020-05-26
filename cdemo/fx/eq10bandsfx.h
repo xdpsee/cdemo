@@ -3,20 +3,20 @@
 // Copyright (c) 2020 zhenhui. All rights reserved.
 //
 
-#ifndef CDEMO_EQ10BANDS_H
-#define CDEMO_EQ10BANDS_H
+#ifndef CDEMO_EQ10BANDSFX_H
+#define CDEMO_EQ10BANDSFX_H
 
 
 #include "bassfx.h"
 #include "setting.h"
 #include "equalizer.h"
 
-class Equalizer10bands : public Equalizer {
+class Equalizer10bandsFX : public Equalizer {
 
 public:
-    Equalizer10bands(HSTREAM stream);
+    Equalizer10bandsFX(HSTREAM stream);
 
-    virtual ~Equalizer10bands();
+    virtual ~Equalizer10bandsFX();
 
     void enable(bool enable) override;
 
@@ -38,5 +38,5 @@ private:
     void updateAll();
 };
 
-#endif //CDEMO_EQ10BANDS_H
+#endif //CDEMO_EQ10BANDSFX_H
 

@@ -9,6 +9,7 @@
 #include "setting.h"
 #include "collection.h"
 #include "equalizer.h"
+#include "reverb.h"
 
 class Playback {
 
@@ -34,6 +35,8 @@ public:
     virtual MediaCollection *queue() = 0;
 
     virtual Equalizer *equalizer() = 0;
+
+    virtual Reverb* reverb() = 0;
 
 };
 
