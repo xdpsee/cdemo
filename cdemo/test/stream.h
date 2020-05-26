@@ -8,6 +8,7 @@
 
 #include "bass.h"
 #include "eq10bands.h"
+#include "equalizer.h"
 
 class StreamObserver;
 
@@ -15,9 +16,10 @@ class Stream {
 
 public:
     Stream(StreamObserver *observer);
+
     ~Stream();
 
-    bool open(const char* file);
+    bool open(const char *file);
 
     void close(bool fadeout);
 
@@ -35,12 +37,12 @@ public:
 
     bool crossfading();
 
-    bool update(EQSetting* setting);
+    Equalizer *equalizer();
 
 private:
-    static void deviceFailSyncProc(HSYNC handle, DWORD channel, DWORD data, void* opaque);
+    static void deviceFailSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque);
 
-    static void streamEOFSyncProc(HSYNC handle, DWORD channel, DWORD data, void* opaque);
+    static void streamEOFSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque);
 
     static void streamFadeoutSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque);
 
@@ -59,11 +61,14 @@ private:
     void doFadeIn();
 
     void doClose();
+
 private:
     HSTREAM _stream;
     volatile BOOL _eof;
-    Equalizer10bands* _equalizer;
-    StreamObserver* _observer;
+
+    Equalizer10bands *_equalizer;
+
+    StreamObserver *_observer;
 
 };
 

@@ -75,6 +75,7 @@
 		ECF319D1A14F1F7632162181 /* mplayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mplayer.h; sourceTree = "<group>"; };
 		ECF319EAB68CC489A80ECDF1 /* setting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = setting.h; sourceTree = "<group>"; };
 		ECF31B789643A6C081DEF9BA /* streamob.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = streamob.cpp; sourceTree = "<group>"; };
+		ECF31C64204A9F9CCE94068B /* equalizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = equalizer.h; sourceTree = "<group>"; };
 		ECF31C9889E2BBB66AB46B6E /* audiofx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audiofx.h; sourceTree = "<group>"; };
 		ECF31D397C07A99CE4CB2C90 /* utility.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = utility.cpp; sourceTree = "<group>"; };
 		ECF31E96F021CA843C795101 /* cdemo */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = cdemo; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,6 +112,7 @@
 				ECF3114DF58F19D34A2B00A6 /* media.h */,
 				ECF3125F31036F97CC1E8907 /* collection.cpp */,
 				ECF3111627360865745D4CCD /* collection.h */,
+				ECF31C64204A9F9CCE94068B /* equalizer.h */,
 			);
 			path = test;
 			sourceTree = "<group>";

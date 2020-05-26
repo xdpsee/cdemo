@@ -96,13 +96,18 @@ bool MusicPlayer::setPosition(double pos) {
     return _stream && _stream->setPosition(pos);
 }
 
-MediaCollection *MusicPlayer::collection() {
+MediaCollection *MusicPlayer::queue() {
     return _collection;
 }
 
-bool MusicPlayer::equalize(EQSetting *setting) {
-    return _stream->update(setting);
+Equalizer* MusicPlayer::equalizer() {
+    if (_stream) {
+        return _stream->equalizer();
+    }
+
+    return NULL;
 }
+
 
 
 

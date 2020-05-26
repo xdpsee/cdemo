@@ -178,8 +178,13 @@ void Stream::loadFX() {
     // TODO: other fx
 }
 
-bool Stream::update(EQSetting *setting) {
-    return _equalizer->update(setting);
+Equalizer *Stream::equalizer() {
+
+    if (!_eof && _stream && _equalizer) {
+        return _equalizer;
+    }
+
+    return NULL;
 }
 
 void Stream::notifyStreamError() {

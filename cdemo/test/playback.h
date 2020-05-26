@@ -8,6 +8,7 @@
 
 #include "setting.h"
 #include "collection.h"
+#include "equalizer.h"
 
 class Playback {
 
@@ -30,9 +31,9 @@ public:
 
     virtual bool setPosition(double pos) = 0;
 
-    virtual MediaCollection* collection() = 0;
+    virtual MediaCollection *queue() = 0;
 
-    virtual bool equalize(EQSetting* setting) = 0;
+    virtual Equalizer *equalizer() = 0;
 
 };
 

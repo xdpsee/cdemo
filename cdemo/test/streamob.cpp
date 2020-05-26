@@ -19,7 +19,7 @@ void DefaultStreamObserver::onStreamCompleted() {
 
     std::cout << "StreamObserver::onStreamCompleted" << std::endl;
 
-    MediaCollection *mediaCollection = _playback->collection();
+    MediaCollection *mediaCollection = _playback->queue();
     MediaItem *mediaItem = mediaCollection->next();
     if (mediaItem) {
         _playback->open(mediaItem, true, true);
@@ -29,7 +29,7 @@ void DefaultStreamObserver::onStreamCompleted() {
 void DefaultStreamObserver::onStreamError() {
     std::cout << "StreamObserver::onStreamError" << std::endl;
 
-    MediaCollection *mediaCollection = _playback->collection();
+    MediaCollection *mediaCollection = _playback->queue();
     MediaItem *mediaItem = mediaCollection->next();
     if (mediaItem) {
         _playback->open(mediaItem, true, true);

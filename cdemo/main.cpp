@@ -19,9 +19,16 @@ static void PrintPluginInfo(HPLUGIN plugin) {
     }
 }
 
+static void InitPlugins() {
+    HPLUGIN h1 = BASS_PluginLoad("libbass_ape.dylib", 0);
+    PrintPluginInfo(h1);
+    HPLUGIN h2 = BASS_PluginLoad("libtags.dylib", 0);
+    PrintPluginInfo(h2);
+}
+
 int main(int argc, const char *argv[]) {
 
-    srand((unsigned int)time(NULL));
+    srand((unsigned int) time(NULL));
 
     std::cout << "system version: " << BASS_GetVersion() << std::endl;
 
@@ -30,15 +37,12 @@ int main(int argc, const char *argv[]) {
         return -1;
     }
 
-    HPLUGIN h1 = BASS_PluginLoad("libbass_ape.dylib", 0);
-    PrintPluginInfo(h1);
-    HPLUGIN h2 = BASS_PluginLoad("libtags.dylib", 0);
-    PrintPluginInfo(h2);
+    InitPlugins();
 
     AudioFXConfig audioFxConfig;
 
     MusicPlayer *player = new MusicPlayer(NULL);
-    MediaCollection *mediaCollection = player->collection();
+    MediaCollection *mediaCollection = player->queue();
     mediaCollection->addMedia(new MediaItem("/Users/zhenhui/audio_test/za.flac"));
     mediaCollection->addMedia(new MediaItem("/Users/zhenhui/audio_test/pfzl.ape"));
     mediaCollection->addMedia(new MediaItem("/Users/zhenhui/audio_test/bbb.mp4"));
@@ -58,7 +62,7 @@ int main(int argc, const char *argv[]) {
     while (std::cin >> op) {
         switch (op) {
             case 'n': {
-                MediaItem* mediaItem = mediaCollection->next();
+                MediaItem *mediaItem = mediaCollection->next();
                 if (mediaItem) {
                     player->open(mediaItem, true, true);
                 }
@@ -71,22 +75,28 @@ int main(int argc, const char *argv[]) {
                 break;
             case 'e': {
                 audioFxConfig.eq()->setEnabled(true);
-                audioFxConfig.eq()->setGain(0, ((float)rand()/(float)(RAND_MAX)) * 12);
-                audioFxConfig.eq()->setGain(1, ((float)rand()/(float)(RAND_MAX)) * 12);
-                audioFxConfig.eq()->setGain(2, ((float)rand()/(float)(RAND_MAX)) * 12);
-                audioFxConfig.eq()->setGain(3, ((float)rand()/(float)(RAND_MAX)) * 12);
-                audioFxConfig.eq()->setGain(4, ((float)rand()/(float)(RAND_MAX)) * 12);
-                audioFxConfig.eq()->setGain(5, ((float)rand()/(float)(RAND_MAX)) * 12);
-                audioFxConfig.eq()->setGain(6, ((float)rand()/(float)(RAND_MAX)) * 12);
-                audioFxConfig.eq()->setGain(7, ((float)rand()/(float)(RAND_MAX)) * 12);
-                audioFxConfig.eq()->setGain(8, ((float)rand()/(float)(RAND_MAX)) * 12);
-                audioFxConfig.eq()->setGain(9, ((float)rand()/(float)(RAND_MAX)) * 12);
-                player->equalize(audioFxConfig.eq());
+                audioFxConfig.eq()->setGain(0, ((float) rand() / (float) (RAND_MAX)) * 12);
+                audioFxConfig.eq()->setGain(1, ((float) rand() / (float) (RAND_MAX)) * 12);
+                audioFxConfig.eq()->setGain(2, ((float) rand() / (float) (RAND_MAX)) * 12);
+                audioFxConfig.eq()->setGain(3, ((float) rand() / (float) (RAND_MAX)) * 12);
+                audioFxConfig.eq()->setGain(4, ((float) rand() / (float) (RAND_MAX)) * 12);
+                audioFxConfig.eq()->setGain(5, ((float) rand() / (float) (RAND_MAX)) * 12);
+                audioFxConfig.eq()->setGain(6, ((float) rand() / (float) (RAND_MAX)) * 12);
+                audioFxConfig.eq()->setGain(7, ((float) rand() / (float) (RAND_MAX)) * 12);
+                audioFxConfig.eq()->setGain(8, ((float) rand() / (float) (RAND_MAX)) * 12);
+                audioFxConfig.eq()->setGain(9, ((float) rand() / (float) (RAND_MAX)) * 12);
+                Equalizer *equalizer = player->equalizer();
+                if (equalizer) {
+                    equalizer->enable(true);
+                    equalizer->update(5, -12.0f);
+                }
             }
                 break;
-            case 'r':{
-                audioFxConfig.eq()->setEnabled(false);
-                player->equalize(audioFxConfig.eq());
+            case 'r': {
+                Equalizer *equalizer = player->equalizer();
+                if (equalizer) {
+                    equalizer->enable(false);
+                }
             }
                 break;
             default:
@@ -102,4 +112,6 @@ int main(int argc, const char *argv[]) {
 
     return 0;
 }
+
+
 

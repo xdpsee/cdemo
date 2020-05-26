@@ -18,7 +18,8 @@
 class MusicPlayer : Playback {
 
 public:
-    MusicPlayer(StreamObserver* observer);
+    MusicPlayer(StreamObserver *observer);
+
     virtual ~MusicPlayer();
 
 public:
@@ -27,7 +28,7 @@ public:
      * @param start start
      * @return true or false
      */
-    bool open(MediaItem* media, bool start, bool fadeIn) override;
+    bool open(MediaItem *media, bool start, bool fadeIn) override;
 
     /**
      * play
@@ -79,14 +80,14 @@ public:
      */
     bool setPosition(double pos) override;
 
-    MediaCollection* collection() override;
+    MediaCollection *queue() override;
 
-    bool equalize(EQSetting *setting) override;
+    Equalizer *equalizer() override;
 
 private:
     Stream *_stream;
-    MediaCollection* _collection;
-    StreamObserver* _observer;
+    MediaCollection *_collection;
+    StreamObserver *_observer;
 };
 
 #endif //CDEMO_MPLAYER_H
