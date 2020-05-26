@@ -7,7 +7,8 @@
 #define __EQ10BANDSFX_H
 
 
-#include "bassfx.h"
+#include "bass.h"
+#include "bass_fx.h"
 #include "setting.h"
 #include "equalizer.h"
 

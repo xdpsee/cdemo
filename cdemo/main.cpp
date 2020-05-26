@@ -20,10 +20,10 @@ static void PrintPluginInfo(HPLUGIN plugin) {
 }
 
 static void InitPlugins() {
-    HPLUGIN h1 = BASS_PluginLoad("libbass_ape.dylib", 0);
-    PrintPluginInfo(h1);
-    HPLUGIN h2 = BASS_PluginLoad("libtags.dylib", 0);
-    PrintPluginInfo(h2);
+    HPLUGIN ape = BASS_PluginLoad("libbass_ape.dylib", 0);
+    PrintPluginInfo(ape);
+    HPLUGIN fx = BASS_PluginLoad("libbass_fx.dylib", 0);
+    PrintPluginInfo(fx);
 }
 
 int main(int argc, const char *argv[]) {

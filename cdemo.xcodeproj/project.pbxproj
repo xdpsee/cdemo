@@ -8,11 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		357FE6DA247BAA0300CE6F7D /* libbass_fx.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 357FE6D9247BAA0300CE6F7D /* libbass_fx.dylib */; };
-		357FE6DC247BAA1500CE6F7D /* libbass_fx.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 357FE6DB247BAA1500CE6F7D /* libbass_fx.dylib */; };
 		35BF71092474F6ED0074763C /* libbass.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ECF318D009DEA2B643210188 /* libbass.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
 		35BF710A2474F6ED0074763C /* libbass.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = ECF318D009DEA2B643210188 /* libbass.dylib */; };
 		35BF710D2474FE4B0074763C /* libbass_ape.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 35BF710C2474FE4B0074763C /* libbass_ape.dylib */; };
 		35BF710E2474FE5F0074763C /* libbass_ape.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 35BF710C2474FE4B0074763C /* libbass_ape.dylib */; };
+		35ED8766247D442200D42342 /* libbass_fx.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 357FE6D9247BAA0300CE6F7D /* libbass_fx.dylib */; };
 		ECF311CBC2ED6E5AC59CC43F /* collection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF3125F31036F97CC1E8907 /* collection.cpp */; };
 		ECF312ABA48888EE11784340 /* streamob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF31B789643A6C081DEF9BA /* streamob.cpp */; };
 		ECF3132DA01896E44BEC9D59 /* stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF314045589019382BF4E97 /* stream.cpp */; };
@@ -33,7 +33,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				357FE6DC247BAA1500CE6F7D /* libbass_fx.dylib in Embed Libraries */,
+				35ED8766247D442200D42342 /* libbass_fx.dylib in Embed Libraries */,
 				35BF710E2474FE5F0074763C /* libbass_ape.dylib in Embed Libraries */,
 				35BF710A2474F6ED0074763C /* libbass.dylib in Embed Libraries */,
 			);
@@ -53,7 +53,6 @@
 
 /* Begin PBXFileReference section */
 		357FE6D9247BAA0300CE6F7D /* libbass_fx.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbass_fx.dylib; path = cdemo/bass/libbass_fx.dylib; sourceTree = "<group>"; };
-		357FE6DB247BAA1500CE6F7D /* libbass_fx.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbass_fx.dylib; path = cdemo/bass/libbass_fx.dylib; sourceTree = "<group>"; };
 		35BF710C2474FE4B0074763C /* libbass_ape.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbass_ape.dylib; path = cdemo/bass/libbass_ape.dylib; sourceTree = "<group>"; };
 		ECF3102887509E036CE81423 /* reverb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reverb.h; sourceTree = "<group>"; };
 		ECF3110795FDF99DABB1CA4D /* eq10bandsfx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = eq10bandsfx.h; sourceTree = "<group>"; };
@@ -67,6 +66,7 @@
 		ECF31413D0A1679D587C21E7 /* stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stream.h; sourceTree = "<group>"; };
 		ECF314368942DAA54784C275 /* audiofx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audiofx.cpp; sourceTree = "<group>"; };
 		ECF31458B8086E409F7CD5A4 /* utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utility.h; sourceTree = "<group>"; };
+		ECF3147E49B1B7C5D71D74AC /* bass_fx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bass_fx.h; sourceTree = "<group>"; };
 		ECF31513B9B5EB1714926B14 /* streamob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = streamob.h; sourceTree = "<group>"; };
 		ECF315671B143D01A9095635 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		ECF315A1393C87B50D9D4A29 /* setting.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = setting.cpp; sourceTree = "<group>"; };
@@ -83,7 +83,6 @@
 		ECF31C9889E2BBB66AB46B6E /* audiofx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audiofx.h; sourceTree = "<group>"; };
 		ECF31D397C07A99CE4CB2C90 /* utility.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = utility.cpp; sourceTree = "<group>"; };
 		ECF31E96F021CA843C795101 /* cdemo */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = cdemo; sourceTree = BUILT_PRODUCTS_DIR; };
-		ECF31FA12506D11C57B2378E /* bassfx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bassfx.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,7 +161,6 @@
 		ECF31A092A75BE7590B58ED0 = {
 			isa = PBXGroup;
 			children = (
-				357FE6DB247BAA1500CE6F7D /* libbass_fx.dylib */,
 				ECF312E88443B1C203BB424D /* Products */,
 				ECF3113E3F8232596E33BC2A /* cdemo */,
 				ECF3163B19F8199187AC958D /* Frameworks */,
@@ -175,13 +173,13 @@
 			children = (
 				ECF318AF35F3238128918291 /* eq10bandsfx.cpp */,
 				ECF3110795FDF99DABB1CA4D /* eq10bandsfx.h */,
-				ECF31FA12506D11C57B2378E /* bassfx.h */,
 				ECF315A1393C87B50D9D4A29 /* setting.cpp */,
 				ECF319EAB68CC489A80ECDF1 /* setting.h */,
 				ECF31C9889E2BBB66AB46B6E /* audiofx.h */,
 				ECF314368942DAA54784C275 /* audiofx.cpp */,
 				ECF3195E82D52B32C14108E3 /* reverbfx.cpp */,
 				ECF3112BF316108E615771C3 /* reverbfx.h */,
+				ECF3147E49B1B7C5D71D74AC /* bass_fx.h */,
 			);
 			path = fx;
 			sourceTree = "<group>";
@@ -324,6 +322,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-lstdc++";
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -376,6 +375,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = "-lstdc++";
 				SDKROOT = macosx;
 			};
 			name = Release;
