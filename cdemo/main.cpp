@@ -74,17 +74,6 @@ int main(int argc, const char *argv[]) {
             }
                 break;
             case 'e': {
-                audioFxConfig.eq()->setEnabled(true);
-                audioFxConfig.eq()->setGain(0, ((float) rand() / (float) (RAND_MAX)) * 12);
-                audioFxConfig.eq()->setGain(1, ((float) rand() / (float) (RAND_MAX)) * 12);
-                audioFxConfig.eq()->setGain(2, ((float) rand() / (float) (RAND_MAX)) * 12);
-                audioFxConfig.eq()->setGain(3, ((float) rand() / (float) (RAND_MAX)) * 12);
-                audioFxConfig.eq()->setGain(4, ((float) rand() / (float) (RAND_MAX)) * 12);
-                audioFxConfig.eq()->setGain(5, ((float) rand() / (float) (RAND_MAX)) * 12);
-                audioFxConfig.eq()->setGain(6, ((float) rand() / (float) (RAND_MAX)) * 12);
-                audioFxConfig.eq()->setGain(7, ((float) rand() / (float) (RAND_MAX)) * 12);
-                audioFxConfig.eq()->setGain(8, ((float) rand() / (float) (RAND_MAX)) * 12);
-                audioFxConfig.eq()->setGain(9, ((float) rand() / (float) (RAND_MAX)) * 12);
                 Equalizer *equalizer = player->equalizer();
                 if (equalizer) {
                     equalizer->enable(true);

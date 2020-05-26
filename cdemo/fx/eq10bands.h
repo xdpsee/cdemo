@@ -18,9 +18,6 @@ public:
 
     virtual ~Equalizer10bands();
 
-    bool update(EQSetting *setting);
-
-private:
     void enable(bool enable) override;
 
     bool update(int band, float gain) override;
