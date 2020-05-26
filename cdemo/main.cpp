@@ -104,6 +104,14 @@ int main(int argc, const char *argv[]) {
                 }
             }
                 break;
+            case 'p': {
+                if (player->playing()) {
+                    player->pause();
+                } else {
+                    player->play(true);
+                }
+            }
+                break;
             default:
                 std::cout << "press 'n' to next, 'q' to exit" << std::endl;
                 break;

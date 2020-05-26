@@ -42,6 +42,12 @@ bool MusicPlayer::open(MediaItem *media, bool start, bool fadeIn) {
     return false;
 }
 
+bool MusicPlayer::playing() {
+
+    return _stream && _stream->playing();
+
+}
+
 bool MusicPlayer::play(bool fadeIn) {
     return _stream && _stream->play(fadeIn);
 }

@@ -36,6 +36,8 @@ public:
 
     bool eof();
 
+    bool playing();
+
     bool crossfading();
 
     Equalizer *equalizer();

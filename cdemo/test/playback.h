@@ -16,6 +16,8 @@ class Playback {
 public:
     virtual bool open(MediaItem *media, bool start, bool fadeIn) = 0;
 
+    virtual bool playing() = 0;
+
     virtual bool play(bool fadeIn) = 0;
 
     virtual bool pause() = 0;

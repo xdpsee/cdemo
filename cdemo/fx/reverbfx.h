@@ -18,6 +18,7 @@ public:
     virtual ~ReverbFX();
 
 public:
+
     void enable(bool enable) override;
 
     void updateInGain(float inGain) override;
@@ -29,6 +30,7 @@ public:
     void updateHighFreqRTRatio(float highFreqRTRatio) override;
 
 private:
+
     void setup();
 
     void tearDown();

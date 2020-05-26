@@ -156,6 +156,12 @@ bool Stream::eof() {
 
 }
 
+bool Stream::playing() {
+
+    return _stream && BASS_ChannelIsActive(_stream) == BASS_ACTIVE_PLAYING;
+
+}
+
 bool Stream::crossfading() {
 
     return _stream && BASS_ChannelIsSliding(_stream, BASS_ATTRIB_VOL);

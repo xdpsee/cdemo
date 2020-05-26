@@ -30,6 +30,8 @@ public:
      */
     bool open(MediaItem *media, bool start, bool fadeIn) override;
 
+    bool playing() override;
+
     /**
      * play
      * @return true or false
