@@ -16,6 +16,9 @@ public:
     virtual ~MediaCollection();
 
 public:
+
+    MediaItem* previous();
+
     MediaItem* next();
 
     void addMedia(MediaItem* mediaItem);

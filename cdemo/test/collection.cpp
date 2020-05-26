@@ -20,6 +20,20 @@ MediaCollection::~MediaCollection() {
     _current = -1;
 }
 
+MediaItem* MediaCollection::previous() {
+    const size_t count = _items.size();
+    if (count == 0) {
+        return NULL;
+    }
+
+    _current -= 1;
+    if (_current < 0) {
+        _current = (size_t)(count - 1);
+    }
+
+    return _items.at(_current);
+}
+
 MediaItem* MediaCollection::next() {
     const size_t count = _items.size();
     if (count == 0) {
