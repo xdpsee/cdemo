@@ -44,6 +44,7 @@ int main(int argc, const char *argv[]) {
     MusicPlayer *player = new MusicPlayer(NULL);
     MediaCollection *mediaCollection = player->queue();
     mediaCollection->addMedia(new MediaItem("/Users/zhenhui/audio_test/周华健 - 迷途.mp3"));
+    mediaCollection->addMedia(new MediaItem("/Users/zhenhui/audio_test/周深 - 随风.ape"));
     mediaCollection->addMedia(new MediaItem("/Users/zhenhui/audio_test/za.flac"));
     mediaCollection->addMedia(new MediaItem("/Users/zhenhui/audio_test/pfzl.ape"));
     mediaCollection->addMedia(new MediaItem("/Users/zhenhui/audio_test/bbb.mp4"));
