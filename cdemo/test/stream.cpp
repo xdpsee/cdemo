@@ -36,7 +36,7 @@ void Stream::streamFadeInSyncProc(HSYNC handle, DWORD channel, DWORD data, void 
     std::cout << "stream fade-in finish, channel = " << channel << std::endl;
 }
 
-void Stream::streamAboutEndPosSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque) {
+void Stream::streamAboutFinishSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque) {
     std::cout << "stream about to finish, channel = " << channel << std::endl;
     BASS_ChannelSlideAttribute(channel, BASS_ATTRIB_VOL, -1, FADING_DURATION);
 }
@@ -56,6 +56,7 @@ Stream::~Stream() {
 bool Stream::open(const char *file) {
 
     _stream = BASS_StreamCreateFile(FALSE, file, 0, 0, BASS_STREAM_PRESCAN);
+
     if (!_stream) {
         notifyStreamError();
         return false;
@@ -159,9 +160,7 @@ bool Stream::setPosition(double pos) {
 
 
 bool Stream::eof() {
-
     return TRUE == _eof;
-
 }
 
 bool Stream::playing() {
@@ -177,7 +176,6 @@ bool Stream::crossfading() {
 }
 
 void Stream::setupSync() {
-
     BASS_ChannelSetSync(_stream, BASS_SYNC_DEV_FAIL | BASS_SYNC_ONETIME, 0, deviceFailSyncProc, this);
     BASS_ChannelSetSync(_stream, BASS_SYNC_END | BASS_SYNC_ONETIME, 0, streamEOFSyncProc, this);
     BASS_ChannelSetSync(_stream, BASS_SYNC_FREE | BASS_SYNC_ONETIME, 0, streamFreeSyncProc, this);
@@ -185,7 +183,7 @@ void Stream::setupSync() {
     QWORD bytes = BASS_ChannelGetLength(_stream, BASS_POS_BYTE);
     QWORD fadeLen = BASS_ChannelSeconds2Bytes(_stream, FADING_DURATION / 1000.0);
     QWORD param = bytes - fadeLen;
-    BASS_ChannelSetSync(_stream, BASS_SYNC_POS | BASS_SYNC_ONETIME, param, streamAboutEndPosSyncProc, this);
+    BASS_ChannelSetSync(_stream, BASS_SYNC_POS | BASS_SYNC_ONETIME, param, streamAboutFinishSyncProc, this);
 }
 
 void Stream::loadFX() {
@@ -229,6 +227,7 @@ void Stream::notifyStreamEof() {
 }
 
 void Stream::doFadeIn() {
+    BASS_ChannelSetAttribute(_stream, BASS_ATTRIB_VOL, 0);
     BASS_ChannelSlideAttribute(_stream, BASS_ATTRIB_VOL, 1, FADING_DURATION);
     BASS_ChannelSetSync(_stream, BASS_SYNC_SLIDE | BASS_SYNC_ONETIME, 0, streamFadeInSyncProc, this);
 }
@@ -250,7 +249,7 @@ void Stream::doClose() {
         LOG_ERROR("stream close, stream free");
     }
 
-    std::cout << "stream close, channel = " << _stream << std::endl;
+    std::cout << "stream closed, channel = " << _stream << std::endl;
 
     _stream = 0;
     _observer = NULL;

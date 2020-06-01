@@ -35,7 +35,6 @@ void DefaultStreamObserver::onStreamError() {
         _playback->open(mediaItem, true, true);
     }
 
-
 }
 
 

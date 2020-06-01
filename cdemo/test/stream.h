@@ -53,7 +53,7 @@ private:
 
     static void streamFadeInSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque);
 
-    static void streamAboutEndPosSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque);
+    static void streamAboutFinishSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque);
 
     static void streamFreeSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque);
 
