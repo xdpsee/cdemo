@@ -31,16 +31,18 @@ void Stream::streamFadeoutSyncProc(HSYNC handle, DWORD channel, DWORD data, void
     stream->doClose();
 }
 
+void Stream::streamFadeInSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque) {
+    Stream *stream = (Stream *) opaque;
+    std::cout << "stream fade-in finish, channel = " << channel << std::endl;
+}
+
 void Stream::streamAboutEndPosSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque) {
     std::cout << "stream about to finish, channel = " << channel << std::endl;
     BASS_ChannelSlideAttribute(channel, BASS_ATTRIB_VOL, -1, FADING_DURATION);
 }
 
-void Stream::streamFadeInSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque) {
-
-    Stream *stream = (Stream *) opaque;
-    std::cout << "stream fade-in finish, channel = " << channel << std::endl;
-
+void Stream::streamFreeSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque) {
+    std::cout << "stream free, channel = " << channel << std::endl;
 }
 
 Stream::Stream(StreamObserver *observer)
@@ -92,6 +94,10 @@ void Stream::close(bool fadeout) {
 
 bool Stream::play(bool fadeIn) {
 
+    if (fadeIn) {
+        BASS_ChannelSetAttribute(_stream, BASS_ATTRIB_VOL, 0);
+    }
+
     BOOL ret = BASS_ChannelPlay(_stream, FALSE);
     if (!ret) {
         int err = BASS_ErrorGetCode();
@@ -103,6 +109,8 @@ bool Stream::play(bool fadeIn) {
 
     if (ret && fadeIn) {
         doFadeIn();
+    } else {
+        BASS_ChannelSetAttribute(_stream, BASS_ATTRIB_VOL, 1);
     }
 
     return TRUE == ret;
@@ -172,6 +180,7 @@ void Stream::setupSync() {
 
     BASS_ChannelSetSync(_stream, BASS_SYNC_DEV_FAIL | BASS_SYNC_ONETIME, 0, deviceFailSyncProc, this);
     BASS_ChannelSetSync(_stream, BASS_SYNC_END | BASS_SYNC_ONETIME, 0, streamEOFSyncProc, this);
+    BASS_ChannelSetSync(_stream, BASS_SYNC_FREE | BASS_SYNC_ONETIME, 0, streamFreeSyncProc, this);
 
     QWORD bytes = BASS_ChannelGetLength(_stream, BASS_POS_BYTE);
     QWORD fadeLen = BASS_ChannelSeconds2Bytes(_stream, FADING_DURATION / 1000.0);
@@ -220,8 +229,7 @@ void Stream::notifyStreamEof() {
 }
 
 void Stream::doFadeIn() {
-    BASS_ChannelSetAttribute(_stream, BASS_ATTRIB_VOL, 0);
-    BASS_ChannelSlideAttribute(_stream, BASS_ATTRIB_VOL, 1.0, FADING_DURATION);
+    BASS_ChannelSlideAttribute(_stream, BASS_ATTRIB_VOL, 1, FADING_DURATION);
     BASS_ChannelSetSync(_stream, BASS_SYNC_SLIDE | BASS_SYNC_ONETIME, 0, streamFadeInSyncProc, this);
 }
 
