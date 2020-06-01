@@ -72,9 +72,7 @@ private:
 private:
     HSTREAM _stream;
     BOOL _eof;
-
-    // sync for eof
-    pthread_mutex_t _mutex;
+    pthread_mutex_t _mutex; // sync for eof
 
     Equalizer10bandsFX *_equalizer;
     ReverbFX* _reverb;

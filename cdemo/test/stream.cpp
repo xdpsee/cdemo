@@ -105,11 +105,6 @@ void Stream::close(bool fadeout) {
 }
 
 bool Stream::play(bool fadeIn) {
-
-    if (fadeIn) {
-        BASS_ChannelSetAttribute(_stream, BASS_ATTRIB_VOL, 0);
-    }
-
     BOOL ret = BASS_ChannelPlay(_stream, FALSE);
     if (!ret) {
         int err = BASS_ErrorGetCode();
@@ -121,8 +116,6 @@ bool Stream::play(bool fadeIn) {
 
     if (ret && fadeIn) {
         doFadeIn();
-    } else {
-        BASS_ChannelSetAttribute(_stream, BASS_ATTRIB_VOL, 1);
     }
 
     return TRUE == ret;
