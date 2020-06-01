@@ -4,6 +4,7 @@
 //
 
 #include <iostream>
+#include <thread>
 #include "streamob.h"
 
 DefaultStreamObserver::DefaultStreamObserver(Playback *playback)
@@ -17,7 +18,7 @@ DefaultStreamObserver::~DefaultStreamObserver() {
 
 void DefaultStreamObserver::onStreamCompleted() {
 
-    std::cout << "StreamObserver::onStreamCompleted" << std::endl;
+    std::cout << "[tid = " << std::this_thread::get_id() << "] " << "StreamObserver::onStreamCompleted" << std::endl;
 
     MediaCollection *mediaCollection = _playback->queue();
     MediaItem *mediaItem = mediaCollection->next();
@@ -27,7 +28,7 @@ void DefaultStreamObserver::onStreamCompleted() {
 }
 
 void DefaultStreamObserver::onStreamError() {
-    std::cout << "StreamObserver::onStreamError" << std::endl;
+    std::cout << "[tid = " << std::this_thread::get_id() << "] " << "StreamObserver::onStreamError" << std::endl;
 
     MediaCollection *mediaCollection = _playback->queue();
     MediaItem *mediaItem = mediaCollection->next();

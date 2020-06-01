@@ -4,6 +4,7 @@
 //
 
 #include <iostream>
+#include <thread>
 #include "utility.h"
 #include "bass.h"
 
@@ -88,7 +89,13 @@ const char *GetErrorDescription(int error) {
 
 }
 
+void PrintInfo(const char* msg) {
+    std::cout << "[tid = " << std::this_thread::get_id() << "] " << msg << std::endl;
+}
+
+
 void PrintError(const char* prefix, int error) {
     const char* desc = GetErrorDescription(error);
-    std::cerr << prefix << ": " << desc << std::endl;
+    std::cerr << "[tid = " << std::this_thread::get_id() << "] " << prefix << ": " << desc << std::endl;
 }
+

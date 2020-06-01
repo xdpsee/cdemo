@@ -1,4 +1,5 @@
 #include <iostream>
+#include <thread>
 #include "stream.h"
 #include "streamob.h"
 #include "utility.h"
@@ -9,7 +10,7 @@ void Stream::deviceFailSyncProc(HSYNC handle, DWORD channel, DWORD data, void *o
 
     Stream *stream = (Stream *) opaque;
 
-    std::cout << "device failed, channel = " << channel << std::endl;
+    std::cout << "[tid = " << std::this_thread::get_id() << "] " << "device failed, channel = " << channel << std::endl;
 
 }
 
@@ -17,40 +18,49 @@ void Stream::streamEOFSyncProc(HSYNC handle, DWORD channel, DWORD data, void *op
 
     Stream *stream = (Stream *) opaque;
 
-    std::cout << "stream eof, channel = " << channel << std::endl;
+    std::cout << "[tid = " << std::this_thread::get_id() << "] " << "stream eof, channel = " << channel << std::endl;
 
+    pthread_mutex_lock(&stream->_mutex);
     stream->_eof = TRUE;
+    pthread_mutex_unlock(&stream->_mutex);
+
     stream->notifyStreamEof();
 }
 
 void Stream::streamFadeoutSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque) {
 
     Stream *stream = (Stream *) opaque;
-    std::cout << "stream fade-out finish, channel = " << channel << std::endl;
+    std::cout << "[tid = " << std::this_thread::get_id() << "] " << "stream fade-out finish, channel = " << channel
+              << std::endl;
 
     stream->doClose();
 }
 
 void Stream::streamFadeInSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque) {
     Stream *stream = (Stream *) opaque;
-    std::cout << "stream fade-in finish, channel = " << channel << std::endl;
+    std::cout << "[tid = " << std::this_thread::get_id() << "] " << "stream fade-in finish, channel = " << channel
+              << std::endl;
 }
 
 void Stream::streamAboutFinishSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque) {
-    std::cout << "stream about to finish, channel = " << channel << std::endl;
+    std::cout << "[tid = " << std::this_thread::get_id() << "] " << "stream about to finish, channel = " << channel
+              << std::endl;
     BASS_ChannelSlideAttribute(channel, BASS_ATTRIB_VOL, -1, FADING_DURATION);
 }
 
 void Stream::streamFreeSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque) {
-    std::cout << "stream free, channel = " << channel << std::endl;
+    std::cout << "[tid = " << std::this_thread::get_id() << "] " << "stream free, channel = " << channel << std::endl;
 }
 
 Stream::Stream(StreamObserver *observer)
         : _observer(observer), _stream(0), _eof(FALSE) {
+
+    pthread_mutex_init(&_mutex, NULL);
 }
 
 Stream::~Stream() {
     close(false);
+    pthread_mutex_destroy(&_mutex);
 }
 
 bool Stream::open(const char *file) {
@@ -63,7 +73,8 @@ bool Stream::open(const char *file) {
     }
 
     if (_stream) {
-        std::cout << "stream open, channel = " << _stream << std::endl;
+        std::cout << "[tid = " << std::this_thread::get_id() << "] " << "stream open, channel = " << _stream
+                  << std::endl;
         setupSync();
         loadFX();
     }
@@ -160,7 +171,13 @@ bool Stream::setPosition(double pos) {
 
 
 bool Stream::eof() {
-    return TRUE == _eof;
+    bool ret;
+
+    pthread_mutex_lock(&_mutex);
+    ret = TRUE == _eof;
+    pthread_mutex_unlock(&_mutex);
+
+    return ret;
 }
 
 bool Stream::playing() {
@@ -249,7 +266,7 @@ void Stream::doClose() {
         LOG_ERROR("stream close, stream free");
     }
 
-    std::cout << "stream closed, channel = " << _stream << std::endl;
+    std::cout << "[tid = " << std::this_thread::get_id() << "] " << "stream closed, channel = " << _stream << std::endl;
 
     _stream = 0;
     _observer = NULL;

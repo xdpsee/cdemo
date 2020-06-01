@@ -71,7 +71,10 @@ private:
 
 private:
     HSTREAM _stream;
-    volatile BOOL _eof;
+    BOOL _eof;
+
+    // sync for eof
+    pthread_mutex_t _mutex;
 
     Equalizer10bandsFX *_equalizer;
     ReverbFX* _reverb;
