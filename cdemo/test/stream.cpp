@@ -73,20 +73,20 @@ bool Stream::open(const char *file) {
 void Stream::close(bool fadeout) {
 
     if (_stream) {
-        bool canFadeout;
+        bool needFadeout;
         DWORD ret = BASS_ChannelIsActive(_stream);
         if (BASS_ACTIVE_PLAYING == ret && fadeout) {
             if (BASS_ChannelSlideAttribute(_stream, BASS_ATTRIB_VOL, -1, FADING_DURATION)) {
                 HSYNC sync = BASS_ChannelSetSync(_stream, BASS_SYNC_SLIDE | BASS_SYNC_ONETIME, 0, streamFadeoutSyncProc, this);
-                canFadeout = sync != 0;
+                needFadeout = sync != 0;
             } else {
-                canFadeout = false;
+                needFadeout = false;
             }
         } else {
-            canFadeout = false;
+            needFadeout = false;
         }
 
-        if (!canFadeout) {
+        if (!needFadeout) {
             doClose();
         }
     }
