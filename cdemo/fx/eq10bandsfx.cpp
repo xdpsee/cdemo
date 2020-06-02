@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include "eq10bandsfx.h"
+#include "utility.h"
 
 static const float fCenters[NUM_BANDS] = {32, 64, 125, 250, 500, 1000, 2000, 4000, 8000, 16000};
 
@@ -64,7 +65,6 @@ void Equalizer10bandsFX::enable(bool enable) {
     } else {
         tearDown();
     }
-
 }
 
 bool Equalizer10bandsFX::update(int band, float gain) {

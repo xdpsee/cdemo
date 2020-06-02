@@ -71,8 +71,7 @@ private:
 
 private:
     HSTREAM _stream;
-    BOOL _eof;
-    pthread_mutex_t _mutex; // sync for eof
+    std::atomic<bool> _eof;
 
     Equalizer10bandsFX *_equalizer;
     ReverbFX* _reverb;

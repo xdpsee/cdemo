@@ -36,7 +36,7 @@ private:
     HSTREAM _stream;
     HFX _handles[NUM_BANDS] = {0};
     BASS_DX8_PARAMEQ _params[NUM_BANDS];
-    bool _enabled;
+    std::atomic<bool> _enabled;
 };
 
 #endif

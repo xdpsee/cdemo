@@ -4,6 +4,7 @@
 //
 
 #include "reverbfx.h"
+#include "utility.h"
 
 #define DEFAULT_IN_GAIN 0
 #define DEFAULT_REVERB_MIX 0

@@ -20,11 +20,7 @@ void Stream::streamEOFSyncProc(HSYNC handle, DWORD channel, DWORD data, void *op
 
     std::cout << "[tid = " << std::this_thread::get_id() << "] " << "stream eof, channel = " << channel << std::endl;
 
-
-    pthread_mutex_lock(&stream->_mutex);
-    stream->_eof = TRUE;
-    pthread_mutex_unlock(&stream->_mutex);
-
+    stream->_eof = true;
     stream->notifyStreamEof();
 }
 
@@ -55,16 +51,14 @@ void Stream::streamFreeSyncProc(HSYNC handle, DWORD channel, DWORD data, void *o
 
 Stream::Stream(StreamObserver *observer)
         : _observer(observer), _stream(0), _eof(FALSE) {
-    pthread_mutex_init(&_mutex, NULL);
 }
 
 Stream::~Stream() {
-    pthread_mutex_destroy(&_mutex);
 }
 
 bool Stream::open(const char *file) {
 
-    _stream = BASS_StreamCreateFile(FALSE, file, 0, 0, BASS_STREAM_PRESCAN);
+    _stream = BASS_StreamCreateFile(FALSE, file, 0, 0, BASS_STREAM_PRESCAN | BASS_STREAM_AUTOFREE);
 
     if (!_stream) {
         notifyStreamError();
@@ -163,13 +157,7 @@ bool Stream::setPosition(double pos) {
 
 
 bool Stream::eof() {
-
-    bool ret;
-    pthread_mutex_lock(&_mutex);
-    ret = TRUE == _eof;
-    pthread_mutex_unlock(&_mutex);
-
-    return ret;
+    return _eof;
 }
 
 bool Stream::playing() {
@@ -187,7 +175,7 @@ bool Stream::crossfading() {
 void Stream::setupSync() {
     BASS_ChannelSetSync(_stream, BASS_SYNC_DEV_FAIL | BASS_SYNC_ONETIME, 0, deviceFailSyncProc, this);
     BASS_ChannelSetSync(_stream, BASS_SYNC_END | BASS_SYNC_ONETIME, 0, streamEOFSyncProc, this);
-    BASS_ChannelSetSync(_stream, BASS_SYNC_FREE | BASS_SYNC_ONETIME, 0, streamFreeSyncProc, this);
+    BASS_ChannelSetSync(_stream, BASS_SYNC_FREE | BASS_SYNC_MIXTIME | BASS_SYNC_ONETIME, 0, streamFreeSyncProc, this);
 
     QWORD bytes = BASS_ChannelGetLength(_stream, BASS_POS_BYTE);
     QWORD fadeLen = BASS_ChannelSeconds2Bytes(_stream, FADING_DURATION / 1000.0);
@@ -242,31 +230,21 @@ void Stream::doFadeIn() {
 }
 
 void Stream::doClose() {
-
-    pthread_mutex_lock(&_mutex);
-    if (_stream) {
-        BOOL stopped = BASS_ChannelStop(_stream);
-        if (!stopped) {
-            LOG_ERROR("stream close, channel stop");
-        }
-
-        delete _equalizer;
-        delete _reverb;
-        _equalizer = NULL;
-        _reverb = NULL;
-
-        BOOL success = BASS_StreamFree(_stream);
-        if (!success) {
-            LOG_ERROR("stream close, stream free");
-        }
-
-        std::cout << "[tid = " << std::this_thread::get_id() << "] " << "stream closed, channel = " << _stream
-                  << std::endl;
-
-        _stream = 0;
-        _observer = NULL;
-        delete this;
+    BOOL stopped = BASS_ChannelStop(_stream);
+    if (!stopped) {
+        LOG_ERROR("stream close, channel stop");
     }
 
-    pthread_mutex_unlock(&_mutex);
+    delete _equalizer;
+    delete _reverb;
+
+    _equalizer = NULL;
+    _reverb = NULL;
+    _stream = 0;
+    _observer = NULL;
+
+    std::cout << "[tid = " << std::this_thread::get_id() << "] " << "stream closed, channel = " << _stream
+              << std::endl;
+
+    delete this;
 }

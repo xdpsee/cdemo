@@ -7,6 +7,7 @@
 #define CDEMO_REVERBFX_H
 
 
+#include <atomic>
 #include "reverb.h"
 #include "bass.h"
 
@@ -38,7 +39,7 @@ private:
 private:
     HSTREAM _stream;
     HFX _handle;
-    bool _enabled;
+    std::atomic<bool> _enabled;
     BASS_DX8_REVERB _reverb;
 };
 
