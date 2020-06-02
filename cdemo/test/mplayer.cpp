@@ -17,7 +17,6 @@ MusicPlayer::MusicPlayer(StreamObserver *observer) : _stream(0), _observer(obser
 MusicPlayer::~MusicPlayer() {
 
     // stop playback
-
     delete _observer;
     delete _collection;
     _collection = NULL;

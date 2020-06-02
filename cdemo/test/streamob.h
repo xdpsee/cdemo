@@ -12,6 +12,8 @@
 class StreamObserver {
 
 public:
+    virtual ~StreamObserver(){}
+public:
     virtual void onStreamError() = 0;
     virtual void onStreamCompleted() = 0;
 

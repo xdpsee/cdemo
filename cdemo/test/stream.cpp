@@ -20,6 +20,7 @@ void Stream::streamEOFSyncProc(HSYNC handle, DWORD channel, DWORD data, void *op
 
     std::cout << "[tid = " << std::this_thread::get_id() << "] " << "stream eof, channel = " << channel << std::endl;
 
+
     pthread_mutex_lock(&stream->_mutex);
     stream->_eof = TRUE;
     pthread_mutex_unlock(&stream->_mutex);
@@ -54,12 +55,10 @@ void Stream::streamFreeSyncProc(HSYNC handle, DWORD channel, DWORD data, void *o
 
 Stream::Stream(StreamObserver *observer)
         : _observer(observer), _stream(0), _eof(FALSE) {
-
     pthread_mutex_init(&_mutex, NULL);
 }
 
 Stream::~Stream() {
-    close(false);
     pthread_mutex_destroy(&_mutex);
 }
 
@@ -164,8 +163,8 @@ bool Stream::setPosition(double pos) {
 
 
 bool Stream::eof() {
-    bool ret;
 
+    bool ret;
     pthread_mutex_lock(&_mutex);
     ret = TRUE == _eof;
     pthread_mutex_unlock(&_mutex);
@@ -244,25 +243,30 @@ void Stream::doFadeIn() {
 
 void Stream::doClose() {
 
-    BOOL stopped = BASS_ChannelStop(_stream);
-    if (!stopped) {
-        LOG_ERROR("stream close, channel stop");
+    pthread_mutex_lock(&_mutex);
+    if (_stream) {
+        BOOL stopped = BASS_ChannelStop(_stream);
+        if (!stopped) {
+            LOG_ERROR("stream close, channel stop");
+        }
+
+        delete _equalizer;
+        delete _reverb;
+        _equalizer = NULL;
+        _reverb = NULL;
+
+        BOOL success = BASS_StreamFree(_stream);
+        if (!success) {
+            LOG_ERROR("stream close, stream free");
+        }
+
+        std::cout << "[tid = " << std::this_thread::get_id() << "] " << "stream closed, channel = " << _stream
+                  << std::endl;
+
+        _stream = 0;
+        _observer = NULL;
+        delete this;
     }
 
-    delete _equalizer;
-    delete _reverb;
-    _equalizer = NULL;
-    _reverb = NULL;
-
-    BOOL success = BASS_StreamFree(_stream);
-    if (!success) {
-        LOG_ERROR("stream close, stream free");
-    }
-
-    std::cout << "[tid = " << std::this_thread::get_id() << "] " << "stream closed, channel = " << _stream << std::endl;
-
-    _stream = 0;
-    _observer = NULL;
-
-    delete this;
+    pthread_mutex_unlock(&_mutex);
 }
