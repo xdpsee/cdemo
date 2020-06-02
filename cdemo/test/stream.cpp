@@ -10,7 +10,7 @@ void Stream::deviceFailSyncProc(HSYNC handle, DWORD channel, DWORD data, void *o
 
     Stream *stream = (Stream *) opaque;
 
-    std::cout << "[tid = " << std::this_thread::get_id() << "] " << "device failed, channel = " << channel << std::endl;
+    std::cout << "[tid = " << std::this_thread::get_id() << "] " << "device failed, stream = " << channel << std::endl;
 
 }
 
@@ -18,7 +18,7 @@ void Stream::streamEOFSyncProc(HSYNC handle, DWORD channel, DWORD data, void *op
 
     Stream *stream = (Stream *) opaque;
 
-    std::cout << "[tid = " << std::this_thread::get_id() << "] " << "stream eof, channel = " << channel << std::endl;
+    std::cout << "[tid = " << std::this_thread::get_id() << "] " << "stream eof, stream = " << channel << std::endl;
 
     stream->_eof = true;
     stream->notifyStreamEof();
@@ -27,7 +27,7 @@ void Stream::streamEOFSyncProc(HSYNC handle, DWORD channel, DWORD data, void *op
 void Stream::streamFadeoutSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque) {
 
     Stream *stream = (Stream *) opaque;
-    std::cout << "[tid = " << std::this_thread::get_id() << "] " << "stream fade-out finish, channel = " << channel
+    std::cout << "[tid = " << std::this_thread::get_id() << "] " << "stream fade-out finish, stream = " << channel
               << std::endl;
 
     stream->doClose();
@@ -35,18 +35,18 @@ void Stream::streamFadeoutSyncProc(HSYNC handle, DWORD channel, DWORD data, void
 
 void Stream::streamFadeInSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque) {
     Stream *stream = (Stream *) opaque;
-    std::cout << "[tid = " << std::this_thread::get_id() << "] " << "stream fade-in finish, channel = " << channel
+    std::cout << "[tid = " << std::this_thread::get_id() << "] " << "stream fade-in finish, stream = " << channel
               << std::endl;
 }
 
 void Stream::streamAboutFinishSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque) {
-    std::cout << "[tid = " << std::this_thread::get_id() << "] " << "stream about to finish, channel = " << channel
+    std::cout << "[tid = " << std::this_thread::get_id() << "] " << "stream about to finish, stream = " << channel
               << std::endl;
     BASS_ChannelSlideAttribute(channel, BASS_ATTRIB_VOL, -1, FADING_DURATION);
 }
 
 void Stream::streamFreeSyncProc(HSYNC handle, DWORD channel, DWORD data, void *opaque) {
-    std::cout << "[tid = " << std::this_thread::get_id() << "] " << "stream free, channel = " << channel << std::endl;
+    std::cout << "[tid = " << std::this_thread::get_id() << "] " << "stream free, stream = " << channel << std::endl;
 }
 
 Stream::Stream(StreamObserver *observer)
@@ -66,7 +66,7 @@ bool Stream::open(const char *file) {
     }
 
     if (_stream) {
-        std::cout << "[tid = " << std::this_thread::get_id() << "] " << "stream open, channel = " << _stream
+        std::cout << "[tid = " << std::this_thread::get_id() << "] " << "stream open, stream = " << _stream
                   << std::endl;
         setupSync();
         loadFX();
@@ -101,7 +101,7 @@ bool Stream::play(bool fadeIn) {
     BOOL ret = BASS_ChannelPlay(_stream, FALSE);
     if (!ret) {
         int err = BASS_ErrorGetCode();
-        PrintError("channel play", err);
+        PrintError("stream play", err);
         if (BASS_ERROR_START == err) {
             ret = BASS_Start();
         }
@@ -118,7 +118,7 @@ bool Stream::pause() {
     BOOL ret = BASS_ChannelPause(_stream);
     if (!ret) {
         int err = BASS_ErrorGetCode();
-        PrintError("channel pause", err);
+        PrintError("stream pause", err);
         return BASS_ERROR_ALREADY == err;
     }
 
@@ -144,13 +144,13 @@ bool Stream::setPosition(double pos) {
 
     QWORD q = BASS_ChannelSeconds2Bytes(_stream, pos);
     if (q < 0) {
-        LOG_ERROR("set position, seconds to bytes");
+        LOG_ERROR("stream set position, seconds to bytes");
         return false;
     }
 
     BOOL ret = BASS_ChannelSetPosition(_stream, q, BASS_POS_BYTE);
     if (!ret) {
-        LOG_ERROR("set position, set");
+        LOG_ERROR("stream set position, set");
     }
     return TRUE == ret;
 }
@@ -232,19 +232,19 @@ void Stream::doFadeIn() {
 void Stream::doClose() {
     BOOL stopped = BASS_ChannelStop(_stream);
     if (!stopped) {
-        LOG_ERROR("stream close, channel stop");
+        LOG_ERROR("stream stop");
     }
 
     delete _equalizer;
     delete _reverb;
 
+    std::cout << "[tid = " << std::this_thread::get_id() << "] " << "stream closed, stream = " << _stream
+              << std::endl;
+
     _equalizer = NULL;
     _reverb = NULL;
     _stream = 0;
     _observer = NULL;
-
-    std::cout << "[tid = " << std::this_thread::get_id() << "] " << "stream closed, channel = " << _stream
-              << std::endl;
 
     delete this;
 }
