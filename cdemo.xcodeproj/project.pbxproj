@@ -7,12 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		357FE6DA247BAA0300CE6F7D /* libbass_fx.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 357FE6D9247BAA0300CE6F7D /* libbass_fx.dylib */; };
 		35BF71092474F6ED0074763C /* libbass.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ECF318D009DEA2B643210188 /* libbass.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
 		35BF710A2474F6ED0074763C /* libbass.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = ECF318D009DEA2B643210188 /* libbass.dylib */; };
 		35BF710D2474FE4B0074763C /* libbass_ape.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 35BF710C2474FE4B0074763C /* libbass_ape.dylib */; };
 		35BF710E2474FE5F0074763C /* libbass_ape.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 35BF710C2474FE4B0074763C /* libbass_ape.dylib */; };
-		35ED8766247D442200D42342 /* libbass_fx.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 357FE6D9247BAA0300CE6F7D /* libbass_fx.dylib */; };
 		ECF311CBC2ED6E5AC59CC43F /* collection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF3125F31036F97CC1E8907 /* collection.cpp */; };
 		ECF312ABA48888EE11784340 /* streamob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF31B789643A6C081DEF9BA /* streamob.cpp */; };
 		ECF3132DA01896E44BEC9D59 /* stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF314045589019382BF4E97 /* stream.cpp */; };
@@ -33,7 +31,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				35ED8766247D442200D42342 /* libbass_fx.dylib in Embed Libraries */,
 				35BF710E2474FE5F0074763C /* libbass_ape.dylib in Embed Libraries */,
 				35BF710A2474F6ED0074763C /* libbass.dylib in Embed Libraries */,
 			);
@@ -52,7 +49,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		357FE6D9247BAA0300CE6F7D /* libbass_fx.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbass_fx.dylib; path = cdemo/bass/libbass_fx.dylib; sourceTree = "<group>"; };
 		35BF710C2474FE4B0074763C /* libbass_ape.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbass_ape.dylib; path = cdemo/bass/libbass_ape.dylib; sourceTree = "<group>"; };
 		ECF3102887509E036CE81423 /* reverb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reverb.h; sourceTree = "<group>"; };
 		ECF3110795FDF99DABB1CA4D /* eq10bandsfx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = eq10bandsfx.h; sourceTree = "<group>"; };
@@ -90,7 +86,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				357FE6DA247BAA0300CE6F7D /* libbass_fx.dylib in Frameworks */,
 				35BF710D2474FE4B0074763C /* libbass_ape.dylib in Frameworks */,
 				35BF71092474F6ED0074763C /* libbass.dylib in Frameworks */,
 			);
@@ -143,7 +138,6 @@
 		ECF3163B19F8199187AC958D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				357FE6D9247BAA0300CE6F7D /* libbass_fx.dylib */,
 				35BF710C2474FE4B0074763C /* libbass_ape.dylib */,
 				ECF318D009DEA2B643210188 /* libbass.dylib */,
 			);
